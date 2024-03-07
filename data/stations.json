@@ -1,6 +1,6 @@
 {
     "UAdo": {
-        "name": "Adenauerplatz",
+        "name": "Adenauer Platz",
         "coordinates": {
             "latitude": "52.5000028",
             "longitude": "13.3073226"
@@ -126,7 +126,7 @@
         }
     },
     "UBpu": {
-        "name": "Bayerischer Platz",
+        "name": "Bayrischer Platz",
         "coordinates": {
             "latitude": "52.4885755",
             "longitude": "13.3405436"
@@ -217,7 +217,7 @@
         }
     },
     "SBR": {
-        "name": "Betriebshof Rummelsburg",
+        "name": "Betriebsbahnhof Rummelsburg",
         "coordinates": {
             "latitude": "52.4936201",
             "longitude": "13.4956087"
@@ -336,7 +336,7 @@
         }
     },
     "UBr": {
-        "name": "Britz-Süd",
+        "name": "Britz Süd",
         "coordinates": {
             "latitude": "52.4377918",
             "longitude": "13.4481868"
@@ -351,6 +351,13 @@
     },
     "UBu": {
         "name": "Bundestag",
+        "coordinates": {
+            "latitude": "52.5185941",
+            "longitude": "13.3762818"
+        }
+    },
+    "UBue": {
+        "name": "Bülowstraße",
         "coordinates": {
             "latitude": "52.5185941",
             "longitude": "13.3762818"
@@ -791,7 +798,7 @@
         }
     },
     "SHuH": {
-        "name": "Humbolthain",
+        "name": "Humboldthain",
         "coordinates": {
             "latitude": "52.5443486",
             "longitude": "13.3740018"
@@ -819,7 +826,7 @@
         }
     },
     "UJK": {
-        "name": "Jakob-Kaiser-Platz",
+        "name": "Jakob Kaiser Platz",
         "coordinates": {
             "latitude": "52.5362794",
             "longitude": "13.2933009"
@@ -1050,7 +1057,7 @@
         }
     },
     "SLir": {
-        "name": "Lichtenrande",
+        "name": "Lichtenrade",
         "coordinates": {
             "latitude": "52.38673",
             "longitude": "13.3963351"
@@ -1302,7 +1309,7 @@
         }
     },
     "SUSd": {
-        "name": "Olympia Stadion",
+        "name": "Olympia-Stadion",
         "coordinates": {
             "latitude": "52.5173151",
             "longitude": "13.2474619"
@@ -1380,6 +1387,20 @@
     },
     "SUPA": {
         "name": "Pankow",
+        "coordinates": {
+            "latitude": "52.5979174",
+            "longitude": "13.435316"
+        }
+    },
+    "UPks": {
+        "name": "Pankstraße",
+        "coordinates": {
+            "latitude": "52.5979174",
+            "longitude": "13.435316"
+        }
+    },
+    "SPeB": {
+        "name": "Perleberger Brücke",
         "coordinates": {
             "latitude": "52.5979174",
             "longitude": "13.435316"
@@ -1575,7 +1596,14 @@
         }
     },
     "URE": {
-        "name": "Residenzenstraße",
+        "name": "Residenzstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "URUE": {
+        "name": "Rüdesheimer Platz",
         "coordinates": {
             "latitude": "52.57084",
             "longitude": "13.358065"
@@ -1946,7 +1974,7 @@
         }
     },
     "SWa": {
-        "name": "Wansee",
+        "name": "Wannsee",
         "coordinates": {
             "latitude": "52.4213627",
             "longitude": "13.176455"
@@ -1995,7 +2023,7 @@
         }
     },
     "SUWA": {
-        "name": "Warschauer Straße",
+        "name": "Warschauerstraße",
         "coordinates": {
             "latitude": "52.5064656",
             "longitude": "13.4473944"
@@ -2065,7 +2093,7 @@
         }
     },
     "SWr": {
-        "name": "Wilhemsruh",
+        "name": "Wilhelmsruh",
         "coordinates": {
             "latitude": "52.58139",
             "longitude": "13.3603651"
@@ -2079,7 +2107,7 @@
         }
     },
     "UWd": {
-        "name": "Wilmersdorfer Straße",
+        "name": "Wilmersdorferstraße",
         "coordinates": {
             "latitude": "52.50642",
             "longitude": "13.3041952"
