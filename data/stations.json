@@ -35,10 +35,10 @@
         }
     },
     "UAS": {
-        "name": "Alt-Spandau",
+        "name": "Altstadt-Spandau",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.5384337",
+            "longitude": "13.2021099"
         }
     },
     "SAR": {
@@ -163,8 +163,8 @@
     "SBe": {
         "name": "Bellevue",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.5200021",
+            "longitude": "13.3432054"
         }
     },
     "SBfe": {
@@ -198,15 +198,15 @@
     "SBie": {
         "name": "Biesdorf",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.5132111",
+            "longitude": "13.5522535"
         }
     },
     "SBk": {
         "name": "Birkenstein",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.5208056",
+            "longitude": "13.6489755"
         }
     },
     "SBw": {
@@ -219,8 +219,8 @@
     "SBR": {
         "name": "Betriebshof Rummelsburg",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.4936201",
+            "longitude": "13.4956087"
         }
     },
     "UBü": {
@@ -240,8 +240,8 @@
     "SBl": {
         "name": "Blankenburg",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.590964",
+            "longitude": "13.4380617"
         }
     },
     "SBlf": {
@@ -324,8 +324,8 @@
     "SBu": {
         "name": "Buch",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.6365826",
+            "longitude": "13.4897027"
         }
     },
     "SBC": {
@@ -679,10 +679,10 @@
         }
     },
     "SHgm": {
-        "name": "Heermühle",
+        "name": "Hegermühle",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.5488304",
+            "longitude": "13.8617005"
         }
     },
     "UHv": {
@@ -707,17 +707,17 @@
         }
     },
     "SHed": {
-        "name": "Henningsdorf",
+        "name": "Hennigsdorf",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.6377356",
+            "longitude": "13.2026381"
         }
     },
     "UHe": {
         "name": "Heinrich-Heine-Straße",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.508023",
+            "longitude": "13.4115876"
         }
     },
     "UH": {
@@ -744,8 +744,8 @@
     "SHd": {
         "name": "Hermsdorf",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.6184699",
+            "longitude": "13.3026191"
         }
     },
     "SHi": {
@@ -772,8 +772,8 @@
     "UHz": {
         "name": "Hohenzollernplatz",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.49383",
+            "longitude": "13.3214751"
         }
     },
     "SHzd": {
@@ -793,8 +793,8 @@
     "SHuH": {
         "name": "Humbolthain",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.5443486",
+            "longitude": "13.3740018"
         }
     },
     "UHh": {
@@ -870,8 +870,8 @@
     "UKa": {
         "name": "Kaiserin-Augusta-Straße",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.4598757",
+            "longitude": "13.3759168"
         }
     },
     "SUKB": {
@@ -884,8 +884,8 @@
     "UKM": {
         "name": "Karl-Marx-Straße",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.4753082",
+            "longitude": "13.4383599"
         }
     },
     "SKh": {
@@ -1045,15 +1045,15 @@
     "SULi": {
         "name": "Lichtenberg",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.5094935",
+            "longitude": "13.4923516"
         }
     },
     "SLir": {
         "name": "Lichtenrande",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.38673",
+            "longitude": "13.3963351"
         }
     },
     "SLiO": {
@@ -1094,8 +1094,8 @@
     "ULL": {
         "name": "Louis-Lewin-Straße",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.5389769",
+            "longitude": "13.6158718"
         }
     },
     "UMd": {
@@ -1185,8 +1185,8 @@
     "SNH": {
         "name": "Neuenhagen",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.5208119",
+            "longitude": "13.6948671"
         }
     },
     "UMB": {
@@ -1239,10 +1239,10 @@
         }
     },
     "UNp": {
-        "name": "Nauner Platz",
+        "name": "Nauener Platz",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.55152",
+            "longitude": "13.3647851"
         }
     },
     "SWe": {
@@ -1255,8 +1255,8 @@
     "UNd": {
         "name": "Neu Westend",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.5160363",
+            "longitude": "13.2579199"
         }
     },
     "SUNk": {
@@ -1304,8 +1304,8 @@
     "SUSd": {
         "name": "Olympia Stadion",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.5173151",
+            "longitude": "13.2474619"
         }
     },
     "SOr": {
@@ -1365,10 +1365,10 @@
         }
     },
     "UOlu": {
-        "name": "Olsoerstraße",
+        "name": "Osloerstraße",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.5562189",
+            "longitude": "13.3755946"
         }
     },
     "UOTI": {
@@ -1570,15 +1570,15 @@
     "URi": {
         "name": "Reinickendorferstraße",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.5403289",
+            "longitude": "13.3672526"
         }
     },
     "URE": {
         "name": "Residenzenstraße",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.57084",
+            "longitude": "13.358065"
         }
     },
     "URw": {
@@ -1696,8 +1696,8 @@
     "SScf": {
         "name": "Schönfließ",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.6647269",
+            "longitude": "13.3373055"
         }
     },
     "USi": {
@@ -1813,10 +1813,10 @@
         }
     },
     "SSkz": {
-        "name": "Südkrezuz",
+        "name": "Südkreuz",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.4751071",
+            "longitude": "13.3631312"
         }
     },
     "USk": {
@@ -1899,8 +1899,8 @@
     "STg": {
         "name": "Tiergarten",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.513956",
+            "longitude": "13.3336967"
         }
     },
     "STP": {
@@ -1948,8 +1948,8 @@
     "SWa": {
         "name": "Wansee",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.4213627",
+            "longitude": "13.176455"
         }
     },
     "UUll": {
@@ -1997,8 +1997,8 @@
     "SUWA": {
         "name": "Warschauer Straße",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.5064656",
+            "longitude": "13.4473944"
         }
     },
     "SWd": {
@@ -2067,8 +2067,8 @@
     "SWr": {
         "name": "Wilhemsruh",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.58139",
+            "longitude": "13.3603651"
         }
     },
     "UWl": {
@@ -2081,8 +2081,8 @@
     "UWd": {
         "name": "Wilmersdorfer Straße",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.50642",
+            "longitude": "13.3041952"
         }
     },
     "SUWIU": {
@@ -2093,10 +2093,10 @@
         }
     },
     "SWoS": {
-        "name": "Wollkanstraße",
+        "name": "Wollankstraße",
         "coordinates": {
-            "latitude": 0,
-            "longitude": 0
+            "latitude": "52.5657323",
+            "longitude": "13.3884705"
         }
     },
     "UWt": {
