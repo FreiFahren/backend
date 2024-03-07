@@ -1,0 +1,1192 @@
+{
+    "UAdo": {
+        "name": "Adenauerplatz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UAfr": {
+        "name": "Afrikanischestraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UA": {
+        "name": "Alexanderplatz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UAS": {
+        "name": "Alt-Spandau",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UMf": {
+        "name": "Alt-Mariendorf",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UTg": {
+        "name": "Alt-Tegel",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UAt": {
+        "name": "Alt-Tempelhof",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UAm": {
+        "name": "Amrumerstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UAu": {
+        "name": "Augsburgerstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UBpu": {
+        "name": "Bayerischer Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UBeo": {
+        "name": "Berlinerstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UB": {
+        "name": "Bernauerstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UBü": {
+        "name": "Biesdorf-Süd",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UBi": {
+        "name": "Birkenstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UBmo": {
+        "name": "Bismarckstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UBl": {
+        "name": "Blaschkoallee",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UBli": {
+        "name": "Blissestraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UBo": {
+        "name": "Boddinstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UBk": {
+        "name": "Borsigwerke",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UBRT": {
+        "name": "Brandenburger Tor",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UBt": {
+        "name": "Breitenbachplatz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UBr": {
+        "name": "Britz-Süd",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UBu": {
+        "name": "Bundestag",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UC": {
+        "name": "Cottbusser Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UDD": {
+        "name": "Dahlem-Dorf",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UObi": {
+        "name": "Deutsche Oper",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UEB": {
+        "name": "Eberswalderstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UEi": {
+        "name": "Eisenacherstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UE": {
+        "name": "Elsterwerdaer Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "URP": {
+        "name": "Ernst-Reuter-Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UFpo": {
+        "name": "Fehrbelliner Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UFf": {
+        "name": "Frankfurter Allee",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UFt": {
+        "name": "Frankfurter Tor",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UFN": {
+        "name": "Franz-Neumann-Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UT": {
+        "name": "Freie Universität (Thielplatz)",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UFi": {
+        "name": "Friedrichsfelde",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UFw": {
+        "name": "Friedrich-Wilhelm-Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UGo": {
+        "name": "Gleisdreieck",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UGb": {
+        "name": "Gesundbrunnen",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UGs": {
+        "name": "Gneisenaustraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UGr": {
+        "name": "Görlitzer Bahnhof",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UGz": {
+        "name": "Grenzallee",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UGt": {
+        "name": "Güntzelstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UHl": {
+        "name": "Halemweg",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UHo": {
+        "name": "Hallesches Tor",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UHa": {
+        "name": "Hansaplatz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UHs": {
+        "name": "Haselhorst",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UHBF": {
+        "name": "Hauptbahnhof",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UHv": {
+        "name": "Hausvogteiplatz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UHb": {
+        "name": "Heidelberger Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UHe": {
+        "name": "Heinrich-Heine-Straße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UH": {
+        "name": "Hellersdorf",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UHpu": {
+        "name": "Hermannplatz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UHMS": {
+        "name": "Hermannplatz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UHz": {
+        "name": "Hohenzollernplatz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UHh": {
+        "name": "Holzhauserstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UHö": {
+        "name": "Hönow",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UIp": {
+        "name": "Innsbrucker Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UJK": {
+        "name": "Jakob-Kaiser-Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UJ": {
+        "name": "Jannowitzbrücke",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UJt": {
+        "name": "Johannisthaler Chaussee",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UJho": {
+        "name": "Jungfernheide",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UKd": {
+        "name": "Kaiserdamm",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UKa": {
+        "name": "Kaiserin-Augusta-Straße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UKB": {
+        "name": "Karl-Bonhoeffer-Nervenklinik",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UKM": {
+        "name": "Karl-Marx-Straße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UKL": {
+        "name": "Kaulsdorf-Nord",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UGK": {
+        "name": "Kienberg (Gärten der Welt)",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UKt": {
+        "name": "Kleistpark",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UKo": {
+        "name": "Klosterstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UKs": {
+        "name": "Kochstraße (Checkpoint Charlie)",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UKn": {
+        "name": "Konstanzerstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UKbo": {
+        "name": "Kottbusser Tor",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UKr": {
+        "name": "Krumme Lanke",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UKfu": {
+        "name": "Kurfürstendamm",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UKus": {
+        "name": "Kurfürstenstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "USch": {
+        "name": "Kurt-Schumacher-Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UL": {
+        "name": "Leinestraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "ULpu": {
+        "name": "Leopoldplatz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "ULi": {
+        "name": "Lichtenberg",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "ULD": {
+        "name": "Lindauer Allee",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "ULa": {
+        "name": "Lipschitzallee",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "ULL": {
+        "name": "Louis-Lewin-Straße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UMd": {
+        "name": "Magdalenenstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UMk": {
+        "name": "Märkisches Museum",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UMe": {
+        "name": "Mehringdamm",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UMB": {
+        "name": "Mendelssohn-Bartholdy-Park",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UMp": {
+        "name": "Mierendorffplatz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UMo": {
+        "name": "Möckernbrücke",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UMH": {
+        "name": "Mohrenstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UMr": {
+        "name": "Moritzplatz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UMs": {
+        "name": "Museumsinsel",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UNA": {
+        "name": "Naturkundemuseum",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UNp": {
+        "name": "Nauner Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UNd": {
+        "name": "Neu Westend",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UNk": {
+        "name": "Neukölln",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UNm": {
+        "name": "Nollendorfplatz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "USd": {
+        "name": "Olympia Stadion",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UOt": {
+        "name": "Onkel Toms Hütte",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UOb": {
+        "name": "Oranienburger Tor",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UOs": {
+        "name": "Oskar-Helene-Heim",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UOlu": {
+        "name": "Olsoerstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UOTI": {
+        "name": "Otisstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UPA": {
+        "name": "Pankow",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UPB": {
+        "name": "Paracelsus-Bad",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UPs": {
+        "name": "Paradestraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UPi": {
+        "name": "Parchimer Allee",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UP": {
+        "name": "Paulsternstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UPL": {
+        "name": "Platz der Luftbrücke",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UPo": {
+        "name": "Podbielskiallee",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UPd": {
+        "name": "Potsdamer Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UPr": {
+        "name": "Prinzenstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "URk": {
+        "name": "Rathaus Neukölln",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "URR": {
+        "name": "Rathaus Reinickendorf",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "URS": {
+        "name": "Rathaus Schöneberg",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "URSp": {
+        "name": "Rathaus Spandau",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "URzu": {
+        "name": "Rathaus Steglitz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "URb": {
+        "name": "Rehberge",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "URi": {
+        "name": "Reinickendorferstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "URE": {
+        "name": "Residenzenstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "URw": {
+        "name": "Richard-Wagner-Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "URm": {
+        "name": "Rohrdamm",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "ULu": {
+        "name": "Rosa-Luxemburg-Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "URo": {
+        "name": "Rosenthaler Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "URa": {
+        "name": "Rotes Rathaus",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "URd": {
+        "name": "Rudow",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "URl": {
+        "name": "Ruhleben",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "USa": {
+        "name": "Samariterstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UScha": {
+        "name": "Scharnweberstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "USi": {
+        "name": "Schillingstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "US": {
+        "name": "Schlesisches Tor",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "USlo": {
+        "name": "Schloßstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "USh": {
+        "name": "Schönhauser Allee",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UST": {
+        "name": "Schönleinstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "USk": {
+        "name": "Schwartzkopffstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "USe": {
+        "name": "Seestraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "USz": {
+        "name": "Senefelderplatz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "USie": {
+        "name": "Siemensdamm",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "USo": {
+        "name": "Sophie-Charlotte-Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "USno": {
+        "name": "Spichernstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "USp": {
+        "name": "Spittelmarkt",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UMi": {
+        "name": "Stadtmitte",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "USr": {
+        "name": "Strausberger Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "USu": {
+        "name": "Südstern",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UTs": {
+        "name": "Tempelhof",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UTh": {
+        "name": "Theodor-Heuss-Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UTk": {
+        "name": "Tierpark",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UTm": {
+        "name": "Turmstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UU": {
+        "name": "Uhlandstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UUll": {
+        "name": "Ullsteinstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UUDU": {
+        "name": "Unter den Linden",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UV": {
+        "name": "Viktoria-Luise-Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UVIN": {
+        "name": "Vinetastraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UVo": {
+        "name": "Voltastraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UWsg": {
+        "name": "Walther-Schreiber-Platz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UWA": {
+        "name": "Warschauer Straße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UWR": {
+        "name": "Weberwiese",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UWe": {
+        "name": "Wedding",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UW": {
+        "name": "Weinmeisterstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UWF": {
+        "name": "Westhafen",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UWl": {
+        "name": "Westphalweg",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UWd": {
+        "name": "Wilmersdorfer Straße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UWIU": {
+        "name": "Wittenau",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UWt": {
+        "name": "Wittenbergplatz",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UWh": {
+        "name": "Wuhletal",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UWk": {
+        "name": "Wutzkyallee",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UY": {
+        "name": "Yorckstraße",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UZi": {
+        "name": "Zitadelle",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UZo": {
+        "name": "Zoologischer Garten",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    },
+    "UZd": {
+        "name": "Zwickauer Damm",
+        "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+        }
+    }
+}
