@@ -22,4 +22,4 @@ jobs:
           source: backend
           target: /root/backend
       - name: Restart Go App Service
-        run: ssh root@${{ secrets.IP_ADDRESS }} "systemctl restart backend"
+        run: ssh root@${{ secrets.IP_ADDRESS }} "sudo systemctl restart freifahren-backend.service"
