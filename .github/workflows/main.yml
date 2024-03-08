@@ -1,0 +1,24 @@
+name: Deploy Go App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Go App
+        run: go build
+      - name: Copy Go App to Server
+        uses: appleboy/scp-action@master
+        with:
+          host: my-go-app.example.com
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: backend
+          target: /root/backend
+      - name: Restart Go App Service
+        run: ssh root@${{ secrets.IP_ADDRESS }} "systemctl restart backend"
