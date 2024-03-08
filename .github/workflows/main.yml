@@ -22,4 +22,10 @@ jobs:
           source: backend
           target: /root/backend
       - name: Restart Go App Service
-        run: ssh root@${{ secrets.IP_ADDRESS }} "sudo systemctl restart freifahren-backend.service"
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          script: "sudo systemctl restart freifahren-backend.service"
