@@ -1,7 +1,7 @@
 name: backend
 
 servers:
-  - address: 165.22.71.70
+  - address: $IP_ADDRESS
     user: root
 
 build:
