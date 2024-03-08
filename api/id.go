@@ -14,32 +14,48 @@ type Station struct {
 	Name string `json:"name"`
 }
 
-func GetStationId(c echo.Context) error {
-	name := c.QueryParam("name")
-
-	// Convert the input to lowercase and remove all spaces
-	name = strings.ToLower(strings.ReplaceAll(name, " ", ""))
-
-	jsonFile, err := os.Open("data/stations.json")
+func ReadFromFile(filePath string) (map[string]Station, error) {
+	file, err := os.Open(filePath)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	defer jsonFile.Close()
+	defer file.Close()
 
-	byteValue, err := io.ReadAll(jsonFile)
+	byteValue, err := io.ReadAll(file)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	var stations map[string]Station
-	json.Unmarshal(byteValue, &stations)
+	if err := json.Unmarshal(byteValue, &stations); err != nil {
+		return nil, err
+	}
 
+	return stations, nil
+}
+
+func FindStationId(name string, stations map[string]Station) (string, bool) {
+	name = strings.ToLower(strings.ReplaceAll(name, " ", ""))
 	for id, station := range stations {
-		// Convert the station name to lowercase and remove all spaces before comparing
 		stationName := strings.ToLower(strings.ReplaceAll(station.Name, " ", ""))
 		if stationName == name {
-			return c.JSON(http.StatusOK, id)
+			return id, true
 		}
+	}
+	return "", false
+}
+
+func GetStationId(c echo.Context) error {
+	name := c.QueryParam("name")
+
+	stations, err := ReadFromFile("data/stations.json")
+	if err != nil {
+		return err
+	}
+
+	id, found := FindStationId(name, stations)
+	if found {
+		return c.JSON(http.StatusOK, id)
 	}
 
 	return echo.ErrNotFound

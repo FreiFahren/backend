@@ -8,6 +8,7 @@ import (
 func main() {
 	e := echo.New()
 
+	// return the id for given name
 	e.GET("/id", api.GetStationId)
 
 	e.Start(":8080")
