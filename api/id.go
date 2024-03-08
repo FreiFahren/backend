@@ -5,17 +5,20 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 )
 
 type Station struct {
-	Name        string            `json:"name"`
-	Coordinates map[string]string `json:"coordinates"`
+	Name string `json:"name"`
 }
 
-func GetStation(c echo.Context) error {
+func GetStationId(c echo.Context) error {
 	name := c.QueryParam("name")
+
+	// Convert the input to lowercase and remove all spaces
+	name = strings.ToLower(strings.ReplaceAll(name, " ", ""))
 
 	jsonFile, err := os.Open("data/stations.json")
 	if err != nil {
@@ -32,7 +35,9 @@ func GetStation(c echo.Context) error {
 	json.Unmarshal(byteValue, &stations)
 
 	for id, station := range stations {
-		if station.Name == name {
+		// Convert the station name to lowercase and remove all spaces before comparing
+		stationName := strings.ToLower(strings.ReplaceAll(station.Name, " ", ""))
+		if stationName == name {
 			return c.JSON(http.StatusOK, id)
 		}
 	}

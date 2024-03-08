@@ -8,7 +8,7 @@ import (
 func main() {
 	e := echo.New()
 
-	e.GET("/id", api.GetStation)
+	e.GET("/id", api.GetStationId)
 
 	e.Start(":8080")
 }
