@@ -19,7 +19,7 @@ func TestFindStationId(t *testing.T) {
 		expectedFound bool
 	}{
 		{"Adenauer Platz exists", "Adenauer Platz", "U-Ado", true},
-		{"Adlershof exists", "Adlershof", "S-Ad", true},
+		{"Adlershof exists", "Adlershof", "S-d", true},
 		{"Ahrensfelde exists", "Ahrensfelde", "S-Ah", true},
 		{"Blankenfelde exists", "Blankenfelde", "S-Blf", true},
 		{"Non-existent station", "Fake Station", "", false},
