@@ -24,7 +24,7 @@ jobs:
       - name: Restart Go App Service
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.HOST }}
+          host: ${{ secrets.IP_ADDRESS }}
           username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
