@@ -11,5 +11,5 @@ func main() {
 	// return the id for given name
 	e.GET("/id", api.GetStationId)
 
-	e.Start(":8085")
+	e.Start(":8080")
 }
