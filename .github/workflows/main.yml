@@ -18,6 +18,7 @@ jobs:
           host: ${{ secrets.IP_ADDRESS }}
           username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           source: backend
           target: /root/backend
       - name: Restart Go App Service
