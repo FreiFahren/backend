@@ -1,14 +1,14 @@
 package main
 
 import (
-	"log"
-	"net/http"
+	"github.com/FreiFahren/backend/api/id"
+	"github.com/labstack/echo/v4"
 )
 
 func main() {
-	// Start the HTTP server
-	log.Println("Starting server on :8080")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
-		log.Fatal("ListenAndServe: ", err)
-	}
+	e := echo.New()
+
+	e.GET("/station", id.GetStation)
+
+	e.Start(":8080")
 }
