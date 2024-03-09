@@ -11,5 +11,8 @@ func main() {
 	// return the id for given name
 	e.GET("/id", api.GetStationId)
 
+	// post a new ticket inspector
+	e.POST("/newInspector", api.PostInspector)
+
 	e.Start(":8080")
 }
