@@ -41,30 +41,50 @@ func processRequestData(req InspectorRequest) (*ResponseData, error) {
         return nil, err
     }
 
-    data := &ResponseData{Line: req.Line}
+    data := &ResponseData{}
 
-    if stationID, found := FindStationId(req.StationName, stations); found {
-        data.Station = Station{Name: req.StationName, ID: stationID}
-    } else if req.StationName != "" {
-        return nil, fmt.Errorf("Station not found")
+    // Use pointers for all fields that can be empty and thus should be inserted as NULL.
+    var linePtr, stationNamePtr, stationIDPtr, directionNamePtr, directionIDPtr *string
+
+    // Assign the line pointer if the line is not an empty string.
+    if req.Line != "" {
+        linePtr = &req.Line
+        data.Line = req.Line // Assign to data for response.
     }
 
-    if directionID, found := FindStationId(req.Direction, stations); found {
-        data.Direction = Station{Name: req.Direction, ID: directionID}
-    } else if req.Direction != "" {
-        return nil, fmt.Errorf("Direction not found")
+    // Only assign other pointers if the value is found and not an empty string.
+    if req.StationName != "" {
+        if stationID, found := FindStationId(req.StationName, stations); found {
+            stationNamePtr = &req.StationName
+            stationIDPtr = &stationID
+            data.Station = Station{Name: req.StationName, ID: stationID}
+        } else {
+            return nil, fmt.Errorf("Station not found")
+        }
     }
 
-    // Insert into database
+    if req.Direction != "" {
+        if directionID, found := FindStationId(req.Direction, stations); found {
+            directionNamePtr = &req.Direction
+            directionIDPtr = &directionID
+            data.Direction = Station{Name: req.Direction, ID: directionID}
+        } else {
+            return nil, fmt.Errorf("Direction not found")
+        }
+    }
+
     now := time.Now()
-	// using pointers to pass nil instead of empty strings
+
+    // Directly pass the pointers for all parameters.
     if err := database.InsertTicketInfo(
         &now,
-		nil, // no message was provided
-		nil, // no author was provided
-        &data.Line,
-        &data.Station.Name, &data.Station.ID,
-        &data.Direction.Name, &data.Direction.ID,
+        nil, 
+        nil,
+        linePtr,
+        stationNamePtr,
+        stationIDPtr,
+        directionNamePtr,
+        directionIDPtr,
     ); err != nil {
         return nil, fmt.Errorf("Failed to insert ticket info into database: %v", err)
     }
