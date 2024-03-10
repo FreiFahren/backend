@@ -14,7 +14,7 @@
         }
     },
     "U-Afr": {
-        "name": "Afrikanischestraße",
+        "name": "Afrikanische Straße",
         "coordinates": {
             "latitude": 52.560474,
             "longitude": 13.3342953
@@ -105,14 +105,14 @@
         }
     },
     "U-Am": {
-        "name": "Amrumerstraße",
+        "name": "Amrumer Straße",
         "coordinates": {
             "latitude": 52.542202,
             "longitude": 13.349534
         }
     },
     "U-Au": {
-        "name": "Augsburgerstraße",
+        "name": "Augsburger Straße",
         "coordinates": {
             "latitude": 52.4996417,
             "longitude": 13.335868
@@ -147,14 +147,14 @@
         }
     },
     "U-Beo": {
-        "name": "Berlinerstraße",
+        "name": "Berliner Straße",
         "coordinates": {
             "latitude": 52.4871906,
             "longitude": 13.3314158
         }
     },
     "U-B": {
-        "name": "Bernauerstraße",
+        "name": "Bernauer Straße",
         "coordinates": {
             "latitude": 52.5380872,
             "longitude": 13.396138
@@ -259,7 +259,7 @@
         }
     },
     "S-BoS": {
-        "name": "Bornholmerstraße",
+        "name": "Bornholmer Straße",
         "coordinates": {
             "latitude": 52.5548321,
             "longitude": 13.3960829
@@ -392,14 +392,14 @@
         }
     },
     "U-EB": {
-        "name": "Eberswalderstraße",
+        "name": "Eberswalder Straße",
         "coordinates": {
             "latitude": 52.5414569,
             "longitude": 13.4121735
         }
     },
     "U-Ei": {
-        "name": "Eisenacherstraße",
+        "name": "Eisenacher Straße",
         "coordinates": {
             "latitude": 52.4895133,
             "longitude": 13.3502945
@@ -574,7 +574,7 @@
         }
     },
     "S-GrS": {
-        "name": "Greifswalderstraße",
+        "name": "Greifswalder Straße",
         "coordinates": {
             "latitude": 52.5405241,
             "longitude": 13.4389295
@@ -805,7 +805,7 @@
         }
     },
     "U-Hh": {
-        "name": "Holzhauserstraße",
+        "name": "Holzhauser Straße",
         "coordinates": {
             "latitude": 52.57644,
             "longitude": 13.2954
@@ -959,7 +959,7 @@
         }
     },
     "U-Ko": {
-        "name": "Klosterstraße",
+        "name": "Kloster Straße",
         "coordinates": {
             "latitude": 52.51723,
             "longitude": 13.41246
@@ -973,7 +973,7 @@
         }
     },
     "U-Kn": {
-        "name": "Konstanzerstraße",
+        "name": "Konstanzer Straße",
         "coordinates": {
             "latitude": 52.4943156,
             "longitude": 13.3093022
@@ -1323,14 +1323,14 @@
         }
     },
     "S-OrS": {
-        "name": "Oranienburgerstraße",
+        "name": "Oranienburger Straße",
         "coordinates": {
             "latitude": 52.5249776,
             "longitude": 13.3929084
         }
     },
     "S-OdS": {
-        "name": "Osdorferstraße",
+        "name": "Osdorfer Straße",
         "coordinates": {
             "latitude": 52.4182613,
             "longitude": 13.3137424
@@ -1372,7 +1372,7 @@
         }
     },
     "U-Olu": {
-        "name": "Osloerstraße",
+        "name": "Osloer Straße",
         "coordinates": {
             "latitude": 52.5568007,
             "longitude": 13.3733342
@@ -1589,7 +1589,7 @@
         }
     },
     "U-Ri": {
-        "name": "Reinickendorferstraße",
+        "name": "Reinickendorfer Straße",
         "coordinates": {
             "latitude": 52.5486114,
             "longitude": 13.3689914
@@ -1659,14 +1659,14 @@
         }
     },
     "U-Sa": {
-        "name": "Samariterstraße",
+        "name": "Samariter Straße",
         "coordinates": {
             "latitude": 52.5147677,
             "longitude": 13.4630192
         }
     },
     "U-Scha": {
-        "name": "Scharnweberstraße",
+        "name": "Scharnweber Straße",
         "coordinates": {
             "latitude": 52.5669332,
             "longitude": 13.3121764
@@ -1792,7 +1792,7 @@
         }
     },
     "S-StS": {
-        "name": "Storkowerstraße",
+        "name": "Storkower Straße",
         "coordinates": {
             "latitude": 52.5238265,
             "longitude": 13.4646009
@@ -1827,7 +1827,7 @@
         }
     },
     "S-SuS": {
-        "name": "Sundgauerstraße",
+        "name": "Sundgauer Straße",
         "coordinates": {
             "latitude": 52.4379536,
             "longitude": 13.2717849
@@ -2023,7 +2023,7 @@
         }
     },
     "SU-WA": {
-        "name": "Warschauerstraße",
+        "name": "Warschauer Straße",
         "coordinates": {
             "latitude": 52.5064656,
             "longitude": 13.4499693
@@ -2058,7 +2058,7 @@
         }
     },
     "U-W": {
-        "name": "Weinmeisterstraße",
+        "name": "Weinmeister Straße",
         "coordinates": {
             "latitude": 52.52547329999999,
             "longitude": 13.4050193
@@ -2107,7 +2107,7 @@
         }
     },
     "U-Wd": {
-        "name": "Wilmersdorferstraße",
+        "name": "Wilmersdorfer Straße",
         "coordinates": {
             "latitude": 52.50642,
             "longitude": 13.30677
