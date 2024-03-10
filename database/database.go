@@ -12,9 +12,8 @@ import (
 var conn *pgx.Conn
 
 type TicketInfo struct {
-	Timestamp   time.Time
-	StationName string
-	Station_ID  string
+	Timestamp  time.Time
+	Station_ID string
 }
 
 func CreateConnection() {
@@ -83,7 +82,7 @@ func InsertTicketInfo(timestamp *time.Time, message *string, author *int64, line
 	return nil
 }
 
-func GetHistoricStations(timestamp time.Time) ([]string, error) {
+func GetHistoricStations(timestamp time.Time) ([]TicketInfo, error) {
 	// Extract hour and weekday
 	hour := timestamp.Hour()
 	weekday := timestamp.Weekday()
@@ -104,33 +103,34 @@ func GetHistoricStations(timestamp time.Time) ([]string, error) {
 	}
 	defer rows.Close()
 
-	// Collect station IDs
-	var stationIDs []string
+	var ticketInfoList []TicketInfo
+
 	for rows.Next() {
-		var stationID string
-		if err := rows.Scan(&stationID); err != nil {
-			return nil, fmt.Errorf("error scanning row: %w", err)
+		var ticketInfo TicketInfo
+
+		if err := rows.Scan(&ticketInfo.Station_ID); err != nil {
+			return nil, fmt.Errorf("error scanning row (historic data): %w", err)
 		}
-		stationIDs = append(stationIDs, stationID)
+		ticketInfoList = append(ticketInfoList, ticketInfo)
 	}
 
-	// Check for errors from iterating over rows
 	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("error iterating rows: %w", err)
+		return nil, fmt.Errorf("error iterating rows (historic data): %w", err)
 	}
 
-	if len(stationIDs) == 0 {
+	if len(ticketInfoList) == 0 {
 		fmt.Println("No historic data found")
 	}
 
-	return stationIDs, nil
+	return ticketInfoList, nil
 }
 
-func GetLatestInfo() ([]TicketInfo, error) {
-	sql := `SELECT timestamp, station_name, station_id
+func GetLatestStationCoordinates() ([]TicketInfo, error) {
+	sql := `SELECT timestamp, station_id
             FROM ticket_info
             WHERE timestamp >= NOW() - INTERVAL '15 minutes'
-            AND station_name IS NOT NULL;`
+            AND station_name IS NOT NULL
+			AND station_id IS NOT NULL;`
 
 	rows, err := conn.Query(context.Background(), sql)
 
@@ -141,16 +141,17 @@ func GetLatestInfo() ([]TicketInfo, error) {
 	defer rows.Close()
 
 	var ticketInfoList []TicketInfo
+
 	for rows.Next() {
 		var ticketInfo TicketInfo
-		if err := rows.Scan(&ticketInfo.Timestamp, &ticketInfo.StationName, &ticketInfo.Station_ID); err != nil {
-			return nil, fmt.Errorf("error scanning row: %w", err)
+		if err := rows.Scan(&ticketInfo.Timestamp, &ticketInfo.Station_ID); err != nil {
+			return nil, fmt.Errorf("error scanning row (latest station coordinate data): %w", err)
 		}
 		ticketInfoList = append(ticketInfoList, ticketInfo)
 	}
 
 	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("error iterating rows: %w", err)
+		return nil, fmt.Errorf("error iterating rows (latest station coordinate data): %w", err)
 	}
 
 	return ticketInfoList, nil

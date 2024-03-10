@@ -21,6 +21,7 @@ type Station struct {
 
 func ReadFromFile(filePath string) (map[string]Station, error) {
 	file, err := os.Open(filePath)
+
 	if err != nil {
 		return nil, err
 	}

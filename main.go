@@ -29,6 +29,7 @@ func main() {
 	// Return the id for given name
 	e.GET("/id", api.GetStationId)
 
+	// Return the last known inspectors 15 mins ago
 	e.GET("/data", api.GetData)
 
 	// Post a new ticket inspector
