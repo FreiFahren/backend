@@ -46,18 +46,18 @@ func CloseConnection() {
 
 func CreateTicketInfoTable() {
 	sql := `
-    CREATE TABLE IF NOT EXISTS ticket_info (
-        id SERIAL PRIMARY KEY,
-        timestamp TIMESTAMP NOT NULL DEFAULT NOW(),
-        message TEXT,
-        author BIGINT,
-        line VARCHAR(3),
-        station_name VARCHAR(255),
-        station_id VARCHAR(10),
-        direction_name VARCHAR(255),
-        direction_id VARCHAR(10)
-    );
-    `
+	CREATE TABLE IF NOT EXISTS ticket_info (
+		id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+		timestamp TIMESTAMP NOT NULL DEFAULT NOW(),
+		message TEXT,
+		author BIGINT,
+		line VARCHAR(3),
+		station_name VARCHAR(255),
+		station_id VARCHAR(10),
+		direction_name VARCHAR(255),
+		direction_id VARCHAR(10)
+	);
+	`
 	_, err := conn.Exec(context.Background(), sql)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to create table: %v\n", err)
