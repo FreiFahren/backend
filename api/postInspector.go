@@ -27,6 +27,11 @@ func PostInspector(c echo.Context) error {
         return echo.NewHTTPError(http.StatusBadRequest, "Invalid request")
     }
 
+    // Check if all parameters are empty
+    if req.Line == "" && req.StationName == "" && req.Direction == "" {
+        return echo.NewHTTPError(http.StatusBadRequest, "At least one of 'line', 'station', or 'direction' must be provided")
+    }
+
     data, err := processRequestData(req)
     if err != nil {
         return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
@@ -34,6 +39,7 @@ func PostInspector(c echo.Context) error {
 
     return c.JSON(http.StatusOK, data)
 }
+
 
 func processRequestData(req InspectorRequest) (*ResponseData, error) {
     stations, err := ReadFromFile("data/stations.json")
