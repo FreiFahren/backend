@@ -1,35 +1,39 @@
 package main
 
 import (
-    "github.com/FreiFahren/backend/api"
-    "github.com/FreiFahren/backend/database"
-    "github.com/joho/godotenv"
-    "github.com/labstack/echo/v4"
-    "log"
+	"log"
+
+	"github.com/FreiFahren/backend/api"
+	"github.com/FreiFahren/backend/database"
+	"github.com/joho/godotenv"
+	"github.com/labstack/echo/v4"
 )
 
 func main() {
-    // Load .env file
-    err := godotenv.Load()
-    if err != nil {
-        log.Fatal("Error loading .env file")
-    }
+	// Load .env file
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 
-    database.CreateConnection()
+	database.CreateConnection()
 
-    // Close the database connection when the main function returns
-    defer database.CloseConnection()
-    
-    // Ensure the required table exists
-    database.CreateTicketInfoTable()
+	// Close the database connection when the main function returns
+	defer database.CloseConnection()
 
-    e := echo.New()
+	// Ensure the required table exists
+	database.CreateTicketInfoTable()
 
-    // Return the id for given name
-    e.GET("/id", api.GetStationId)
+	e := echo.New()
 
-    // Post a new ticket inspector
-    e.POST("/newInspector", api.PostInspector)
+	// Return the id for given name
+	e.GET("/id", api.GetStationId)
 
-    e.Start(":8080")
+	// Return the last known inspectors 15 mins ago
+	e.GET("/data", api.GetData)
+
+	// Post a new ticket inspector
+	e.POST("/newInspector", api.PostInspector)
+
+	e.Start(":8080")
 }

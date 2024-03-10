@@ -1,13 +1,16 @@
 package api_test
 
 import (
-	"testing"
-	"github.com/FreiFahren/backend/api"
+	"fmt"
 	"math"
+	"os"
+	"testing"
+
+	"github.com/FreiFahren/backend/api"
 )
 
 func TestIdToCoordinates(t *testing.T) {
-
+	os.Chdir("..")
 	tests := []struct {
 		id       string
 		expected [2]float64 // Latitude, Longitude
@@ -24,7 +27,14 @@ func TestIdToCoordinates(t *testing.T) {
 		t.Run(tt.id, func(t *testing.T) {
 			latitude, longitude, err := api.IdToCoordinates(tt.id)
 			if err != nil {
-				t.Fatalf("IdToCoordinates(%s) returned an error: %v", tt.id, err)
+
+				dir, err := os.Getwd()
+				if err != nil {
+					fmt.Println("Error getting current directory:", err)
+					return
+				}
+
+				t.Fatalf("IdToCoordinates(%s) returned an error: %v %s", tt.id, err, dir)
 			}
 			if math.Abs(latitude-tt.expected[0]) > 0.000001 || math.Abs(longitude-tt.expected[1]) > 0.000001 {
 				t.Errorf("IdToCoordinates(%s) = %v, %v; expected %v, %v", tt.id, latitude, longitude, tt.expected[0], tt.expected[1])
