@@ -1,13 +1,12 @@
 package api
 
 import (
-    "encoding/json"
+	"time"
     "net/http"
     "github.com/labstack/echo/v4"
-    "github.com/FreiFahren/backend/database" // Make sure this import path is correct
+    "github.com/FreiFahren/backend/database"
 )
 
-// Assuming the Station structure is defined somewhere in your code.
 type InspectorRequest struct {
     Line        string `json:"line"`
     StationName string `json:"station"`
@@ -58,18 +57,23 @@ func PostInspector(c echo.Context) error {
         data.Direction = Station{Name: req.Direction, ID: directionID}
     }
 
+	// get current time
+	now := time.Now()
+
     // Insert the information into the database
-    err = database.InsertTicketInfo(data.Line, data.Station.Name, data.Station.ID, data.Direction.Name, data.Direction.ID)
+    err = database.InsertTicketInfo(
+		&now,
+		nil, // message is not provided
+		nil, // author is not provided
+		&data.Line,
+		&data.Station.Name,
+		&data.Station.ID,
+		&data.Direction.Name,
+		&data.Direction.ID,
+	)
     if err != nil {
         return echo.NewHTTPError(http.StatusInternalServerError, "Failed to insert ticket info into database")
     }
-
-    // Optionally, you can remove the JSON marshal and println if you don't need it for debugging
-    jsonData, err := json.Marshal(data)
-    if err != nil {
-        return err
-    }
-    println(string(jsonData))
 
     // Return the assembled data as JSON
     return c.JSON(http.StatusOK, data)

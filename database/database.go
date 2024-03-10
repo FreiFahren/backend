@@ -4,6 +4,7 @@ import (
     "context"
     "fmt"
     "os"
+    "time"
 
     "github.com/jackc/pgx/v4"
 )
@@ -61,16 +62,19 @@ func CreateTicketInfoTable() {
     fmt.Println("Table created or already exists.")
 }
 
-func InsertTicketInfo(line, stationName, stationId, directionName, directionId string) error {
+func InsertTicketInfo(timestamp *time.Time, message *string, author *int64, line, stationName, stationId, directionName, directionId *string) error {
     sql := `
-    INSERT INTO ticket_info (line, station_name, station_id, direction_name, direction_id)
-    VALUES ($1, $2, $3, $4, $5);
+    INSERT INTO ticket_info (timestamp, message, author, line, station_name, station_id, direction_name, direction_id)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
     `
-    _, err := conn.Exec(context.Background(), sql, line, stationName, stationId, directionName, directionId)
+    // Convert *string and *int64 directly to interface{} for pgx
+    values := []interface{}{timestamp, message, author, line, stationName, stationId, directionName, directionId}
+
+    _, err := conn.Exec(context.Background(), sql, values...)
     if err != nil {
         fmt.Fprintf(os.Stderr, "Failed to insert ticket info: %v\n", err)
-        return err // Return the error instead of exiting
+        return err
     }
     fmt.Println("Ticket info inserted successfully.")
-    return nil // No error occurred
+    return nil
 }
