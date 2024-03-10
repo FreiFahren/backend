@@ -75,7 +75,7 @@ The request should be a `POST` request with the following JSON body:
 
 Example:
 ```sh
-curl -X POST http://localhost:8080/newInspector \         
+curl -X POST http://localhost:8080/newInspector \
      -H "Content-Type: application/json" \
      -d '{"line":"S7","station":"Alexanderplatz","direction":"Ahrensfelde"}'
 ```
