@@ -11,6 +11,12 @@ import (
 
 var conn *pgx.Conn
 
+type TicketInfo struct {
+	Timestamp   time.Time
+	StationName string
+	Station_ID  string
+}
+
 func CreateConnection() {
 	var err error
 	dbUrl := fmt.Sprintf("postgres://%s:%s@%s:%s/%s",
@@ -89,7 +95,7 @@ func GetHistoricStations(timestamp time.Time) ([]string, error) {
         WHERE EXTRACT(HOUR FROM timestamp) = $1 AND EXTRACT(DOW FROM timestamp) = $2
         GROUP BY station_id
         ORDER BY COUNT(station_id) DESC
-        LIMIT 5
+        LIMIT 20;
     `
 	// Execute query
 	rows, err := conn.Query(context.Background(), sql, hour, weekday)
@@ -113,5 +119,39 @@ func GetHistoricStations(timestamp time.Time) ([]string, error) {
 		return nil, fmt.Errorf("error iterating rows: %w", err)
 	}
 
+	if len(stationIDs) == 0 {
+		fmt.Println("No historic data found")
+	}
+
 	return stationIDs, nil
+}
+
+func GetLatestInfo() ([]TicketInfo, error) {
+	sql := `SELECT timestamp, station_name, station_id
+            FROM ticket_info
+            WHERE timestamp >= NOW() - INTERVAL '15 minutes'
+            AND station_name IS NOT NULL;`
+
+	rows, err := conn.Query(context.Background(), sql)
+
+	if err != nil {
+		return nil, fmt.Errorf("query execution error: %w", err)
+	}
+
+	defer rows.Close()
+
+	var ticketInfoList []TicketInfo
+	for rows.Next() {
+		var ticketInfo TicketInfo
+		if err := rows.Scan(&ticketInfo.Timestamp, &ticketInfo.StationName, &ticketInfo.Station_ID); err != nil {
+			return nil, fmt.Errorf("error scanning row: %w", err)
+		}
+		ticketInfoList = append(ticketInfoList, ticketInfo)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("error iterating rows: %w", err)
+	}
+
+	return ticketInfoList, nil
 }
