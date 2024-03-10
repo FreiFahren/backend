@@ -11,8 +11,12 @@ import (
 )
 
 type Station struct {
-	ID  string `json:"id"`
-	Name string `json:"name"`
+	ID          string `json:"id"`
+	Name        string `json:"name"`
+	Coordinates struct {
+		Latitude  float64 `json:"latitude"`
+		Longitude float64 `json:"longitude"`
+	} `json:"coordinates"`
 }
 
 func ReadFromFile(filePath string) (map[string]Station, error) {
