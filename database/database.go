@@ -77,13 +77,12 @@ func InsertTicketInfo(timestamp *time.Time, message *string, author *int64, line
 	return nil
 }
 
-// a function that accepts a timestamp and will return the top 10 station ids for that time of day and day of the week
 func GetHistoricStations(timestamp time.Time) ([]string, error) {
 	// Extract hour and weekday
 	hour := timestamp.Hour()
 	weekday := timestamp.Weekday()
 
-	// Construct SQL query
+	// get top 5 stations for the given hour and weekday
 	sql := `
         SELECT station_id
         FROM ticket_info
