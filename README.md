@@ -45,6 +45,8 @@ Freifahren is an innovative project designed to map the presence of ticket inspe
 
 We have several API endpoints that allow users to interact with the application. The main endpoints are:
 
+### Getting the id of a station
+
 - `/id` - This endpoint is used to get the id of a station given its name. It is case and whitespace insensitive.
 
 The request should be a `GET` request with the following query parameters:
@@ -61,6 +63,8 @@ Example:
 ```sh
 "SU-A"
 ```
+
+### Reporting a new inspector sighting
 
 - `/newInspector` - This endpoint is used to add a new inspector sighting to the database.
 
