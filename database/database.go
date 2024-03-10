@@ -75,6 +75,5 @@ func InsertTicketInfo(timestamp *time.Time, message *string, author *int64, line
         fmt.Fprintf(os.Stderr, "Failed to insert ticket info: %v\n", err)
         return err
     }
-    fmt.Println("Ticket info inserted successfully.")
     return nil
 }

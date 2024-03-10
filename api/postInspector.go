@@ -1,80 +1,73 @@
 package api
 
 import (
+	"fmt"
+	"net/http"
 	"time"
-    "net/http"
-    "github.com/labstack/echo/v4"
-    "github.com/FreiFahren/backend/database"
+	"github.com/labstack/echo/v4"
+	"github.com/FreiFahren/backend/database"
 )
 
+// Moved outside to make it accessible throughout the package.
 type InspectorRequest struct {
     Line        string `json:"line"`
     StationName string `json:"station"`
     Direction   string `json:"direction"`
 }
 
+type ResponseData struct {
+    Line      string  `json:"line"`
+    Station   Station `json:"station"`
+    Direction Station `json:"direction"`
+}
+
 
 func PostInspector(c echo.Context) error {
-    // Decode the request body into an InspectorRequest struct
     var req InspectorRequest
     if err := c.Bind(&req); err != nil {
-        return err
+        return echo.NewHTTPError(http.StatusBadRequest, "Invalid request")
     }
 
-    // Initialize the response data structure
-    type ResponseData struct {
-        Line      string   `json:"line"`
-        Station   Station  `json:"station"`
-        Direction Station  `json:"direction"`
+    data, err := processRequestData(req)
+    if err != nil {
+        return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
     }
-    var data ResponseData
 
-    // Set the line directly from the request
-    data.Line = req.Line
+    return c.JSON(http.StatusOK, data)
+}
 
-    // Read stations from file
+func processRequestData(req InspectorRequest) (*ResponseData, error) {
     stations, err := ReadFromFile("data/stations.json")
     if err != nil {
-        return err
+        return nil, err
     }
 
-    // Find station ID for both station and direction
-    var stationID, directionID string
-    var found bool
-    if req.StationName != "" {
-        stationID, found = FindStationId(req.StationName, stations)
-        if !found {
-            return echo.NewHTTPError(http.StatusNotFound, "Station not found")
-        }
+    data := &ResponseData{Line: req.Line}
+
+    if stationID, found := FindStationId(req.StationName, stations); found {
         data.Station = Station{Name: req.StationName, ID: stationID}
+    } else if req.StationName != "" {
+        return nil, fmt.Errorf("Station not found")
     }
 
-    if req.Direction != "" {
-        directionID, found = FindStationId(req.Direction, stations)
-        if !found {
-            return echo.NewHTTPError(http.StatusNotFound, "Direction not found")
-        }
+    if directionID, found := FindStationId(req.Direction, stations); found {
         data.Direction = Station{Name: req.Direction, ID: directionID}
+    } else if req.Direction != "" {
+        return nil, fmt.Errorf("Direction not found")
     }
 
-	// get current time
-	now := time.Now()
-
-    // Insert the information into the database
-    err = database.InsertTicketInfo(
-		&now,
-		nil, // message is not provided
-		nil, // author is not provided
-		&data.Line,
-		&data.Station.Name,
-		&data.Station.ID,
-		&data.Direction.Name,
-		&data.Direction.ID,
-	)
-    if err != nil {
-        return echo.NewHTTPError(http.StatusInternalServerError, "Failed to insert ticket info into database")
+    // Insert into database
+    now := time.Now()
+    if err := database.InsertTicketInfo(
+        &now,
+		nil, // no message was provided
+		nil, // no author was provided
+        &data.Line,
+        &data.Station.Name, &data.Station.ID,
+        &data.Direction.Name, &data.Direction.ID,
+    ); err != nil {
+        return nil, fmt.Errorf("Failed to insert ticket info into database: %v", err)
     }
 
-    // Return the assembled data as JSON
-    return c.JSON(http.StatusOK, data)
+    return data, nil
 }
