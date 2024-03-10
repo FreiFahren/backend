@@ -8,7 +8,6 @@ import (
 	"github.com/FreiFahren/backend/database"
 )
 
-// Moved outside to make it accessible throughout the package.
 type InspectorRequest struct {
     Line        string `json:"line"`
     StationName string `json:"station"`
@@ -58,6 +57,7 @@ func processRequestData(req InspectorRequest) (*ResponseData, error) {
 
     // Insert into database
     now := time.Now()
+	// using pointers to pass nil instead of empty strings
     if err := database.InsertTicketInfo(
         &now,
 		nil, // no message was provided
