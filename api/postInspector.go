@@ -3,18 +3,18 @@ package api
 import (
     "encoding/json"
     "net/http"
-
     "github.com/labstack/echo/v4"
+    "github.com/FreiFahren/backend/database" // Make sure this import path is correct
 )
 
-// Define the structures for the request and station
+// Assuming the Station structure is defined somewhere in your code.
 type InspectorRequest struct {
     Line        string `json:"line"`
     StationName string `json:"station"`
     Direction   string `json:"direction"`
 }
 
-// Your PostInspector function
+
 func PostInspector(c echo.Context) error {
     // Decode the request body into an InspectorRequest struct
     var req InspectorRequest
@@ -39,28 +39,32 @@ func PostInspector(c echo.Context) error {
         return err
     }
 
-    // Find station ID
+    // Find station ID for both station and direction
+    var stationID, directionID string
+    var found bool
     if req.StationName != "" {
-        id, found := FindStationId(req.StationName, stations)
-        if found {
-            data.Station = Station{Name: req.StationName, ID: id}
-        } else {
+        stationID, found = FindStationId(req.StationName, stations)
+        if !found {
             return echo.NewHTTPError(http.StatusNotFound, "Station not found")
         }
+        data.Station = Station{Name: req.StationName, ID: stationID}
     }
 
-    // Find direction ID
     if req.Direction != "" {
-        id, found := FindStationId(req.Direction, stations)
-        if found {
-            data.Direction = Station{Name: req.Direction, ID: id}
-        } else {
+        directionID, found = FindStationId(req.Direction, stations)
+        if !found {
             return echo.NewHTTPError(http.StatusNotFound, "Direction not found")
         }
+        data.Direction = Station{Name: req.Direction, ID: directionID}
     }
 
-    // For demonstration, we'll print the assembled data
-    // In your real application, you'd likely save this data to a database or another storage
+    // Insert the information into the database
+    err = database.InsertTicketInfo(data.Line, data.Station.Name, data.Station.ID, data.Direction.Name, data.Direction.ID)
+    if err != nil {
+        return echo.NewHTTPError(http.StatusInternalServerError, "Failed to insert ticket info into database")
+    }
+
+    // Optionally, you can remove the JSON marshal and println if you don't need it for debugging
     jsonData, err := json.Marshal(data)
     if err != nil {
         return err

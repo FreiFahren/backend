@@ -1,18 +1,35 @@
 package main
 
 import (
-	"github.com/FreiFahren/backend/api"
-	"github.com/labstack/echo/v4"
+    "github.com/FreiFahren/backend/api"
+    "github.com/FreiFahren/backend/database"
+    "github.com/joho/godotenv"
+    "github.com/labstack/echo/v4"
+    "log"
 )
 
 func main() {
-	e := echo.New()
+    // Load .env file
+    err := godotenv.Load()
+    if err != nil {
+        log.Fatal("Error loading .env file")
+    }
 
-	// return the id for given name
-	e.GET("/id", api.GetStationId)
+    database.CreateConnection()
 
-	// post a new ticket inspector
-	e.POST("/newInspector", api.PostInspector)
+    // Close the database connection when the main function returns
+    defer database.CloseConnection()
+    
+    // Ensure the required table exists
+    database.CreateTicketInfoTable()
 
-	e.Start(":8080")
+    e := echo.New()
+
+    // Return the id for given name
+    e.GET("/id", api.GetStationId)
+
+    // Post a new ticket inspector
+    e.POST("/newInspector", api.PostInspector)
+
+    e.Start(":8080")
 }
