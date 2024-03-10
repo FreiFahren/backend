@@ -86,3 +86,23 @@ Example:
 ```json
 {"line":"S7","station":{"id":"SU-A","name":"Alexanderplatz"},"direction":{"id":"S-Ah","name":"Ahrensfelde"}}
 ```
+
+### Receive the last 15 known stations
+
+- `/data` - This endpoint is used to GET all sightings from the last 15 minutes
+
+The request should be a `GET` request, with this example:
+
+Example:
+```sh
+curl -X GET http://localhost:8080/data \
+     -H "Content-Type: application/json" 
+```
+
+It will return a json response with the content of the inspector sighting:
+
+
+```json
+[[latitude, longitude],[52.52179049999999,13.4136147],[..]]
+
+```
