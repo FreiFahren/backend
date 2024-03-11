@@ -87,7 +87,7 @@ Example:
 {"line":"S7","station":{"id":"SU-A","name":"Alexanderplatz"},"direction":{"id":"S-Ah","name":"Ahrensfelde"}}
 ```
 
-### Receive the last 15 known stations
+### Receive the last known stations 15 mins ago
 
 - `/data` - This endpoint is used to GET all sightings from the last 15 minutes
 
