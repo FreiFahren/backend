@@ -92,6 +92,8 @@ func GetHistoricStations(timestamp time.Time) ([]TicketInfo, error) {
         SELECT station_id
         FROM ticket_info
         WHERE EXTRACT(HOUR FROM timestamp) = $1 AND EXTRACT(DOW FROM timestamp) = $2
+		AND station_name IS NOT NULL
+		AND station_id IS NOT NULL
         GROUP BY station_id
         ORDER BY COUNT(station_id) DESC
         LIMIT 20;
@@ -128,7 +130,7 @@ func GetHistoricStations(timestamp time.Time) ([]TicketInfo, error) {
 func GetLatestStationCoordinates() ([]TicketInfo, error) {
 	sql := `SELECT timestamp, station_id
             FROM ticket_info
-            WHERE timestamp >= NOW() - INTERVAL '15 minutes'
+            WHERE timestamp >= NOW() - INTERVAL '180 minutes'
             AND station_name IS NOT NULL
 			AND station_id IS NOT NULL;`
 
