@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"os"
 	"time"
@@ -12,8 +13,10 @@ import (
 var conn *pgx.Conn
 
 type TicketInfo struct {
-	Timestamp  time.Time
-	Station_ID string
+	Timestamp    time.Time
+	Station_ID   string
+	Line         sql.NullString
+	Direction_ID sql.NullString
 }
 
 func CreateConnection() {
@@ -128,7 +131,7 @@ func GetHistoricStations(timestamp time.Time) ([]TicketInfo, error) {
 }
 
 func GetLatestStationCoordinates() ([]TicketInfo, error) {
-	sql := `SELECT timestamp, station_id
+	sql := `SELECT timestamp, station_id, direction_id, line
             FROM ticket_info
             WHERE timestamp >= NOW() - INTERVAL '180 minutes'
             AND station_name IS NOT NULL
@@ -146,9 +149,10 @@ func GetLatestStationCoordinates() ([]TicketInfo, error) {
 
 	for rows.Next() {
 		var ticketInfo TicketInfo
-		if err := rows.Scan(&ticketInfo.Timestamp, &ticketInfo.Station_ID); err != nil {
+		if err := rows.Scan(&ticketInfo.Timestamp, &ticketInfo.Station_ID, &ticketInfo.Direction_ID, &ticketInfo.Line); err != nil {
 			return nil, fmt.Errorf("error scanning row (latest station coordinate data): %w", err)
 		}
+
 		ticketInfoList = append(ticketInfoList, ticketInfo)
 	}
 
