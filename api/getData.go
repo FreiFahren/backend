@@ -14,6 +14,7 @@ import (
 // to return to the frontend
 type TicketInspector struct {
 	Coordinates []float64
+	StationID   string
 	DirectionID string
 	Line        string
 }
@@ -86,6 +87,7 @@ func GetData(c echo.Context) error {
 		}
 
 		TicketInspectorInfo := TicketInspector{
+			StationID:   cleanedStationId,
 			Coordinates: []float64{latitude, longitude},
 			DirectionID: cleanedDirectionId,
 			Line:        cleanedLine,
