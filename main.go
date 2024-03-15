@@ -35,7 +35,7 @@ func main() {
 	e.GET("/id", api.GetStationId)
 
 	// Return the last known inspectors 15 mins ago
-	e.GET("/latest", api.GetRecentTicketInspectorInfo)
+	e.GET("/recent", api.GetRecentTicketInspectorInfo)
 
 	// Return the name for given id
 	e.GET("/station", api.GetStationName)

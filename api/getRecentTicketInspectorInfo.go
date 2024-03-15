@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/FreiFahren/backend/database"
 	. "github.com/FreiFahren/backend/structs"
@@ -34,25 +35,26 @@ func GetRecentTicketInspectorInfo(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	// // We fill up TicketInfoList with historic data, if we have less than 10 current entries
-	// if len(TicketInfoList) < 10 {
-	// 	historicDataList, err := database.GetHistoricStations(time.Now())
+	// We fill up TicketInfoList with historic data, if we have less than 10 current entries
+	if len(TicketInfoList) < 10 {
+		historicDataList, err := database.GetHistoricStations(time.Now())
 
-	// 	if err != nil {
-	// 		return c.JSON(http.StatusInternalServerError, err.Error())
-	// 	}
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, err.Error())
+		}
 
-	// 	for _, TicketInfo := range historicDataList {
+		for _, TicketInfo := range historicDataList {
 
-	// 		fmt.Println("Adding historic data...")
-	// 		if len(TicketInfoList) > 10 {
-	// 			break
-	// 		}
+			fmt.Println("Adding historic data...")
+			if len(TicketInfoList) > 10 {
+				break
+			}
 
-	// 		TicketInfoList = append(TicketInfoList, TicketInfo)
-	// 		fmt.Println(TicketInfo.Station_ID)
-	// 	}
-	// }
+			TicketInfoList = append(TicketInfoList, TicketInfo)
+			fmt.Println(TicketInfo.Station_ID)
+
+		}
+	}
 
 	TicketInspectorList := make([]TicketInspector, 0)
 
@@ -130,5 +132,17 @@ func GetRecentTicketInspectorInfo(c echo.Context) error {
 
 	}
 
-	return c.JSONPretty(http.StatusOK, TicketInspectorList, "  ")
+	// Remove duplicate stations
+	uniqueStations := make(map[string]struct{})
+	filteredTicketInspectorList := make([]TicketInspector, 0)
+
+	for _, ticketInspector := range TicketInspectorList {
+		stationID := ticketInspector.Station.ID
+		if _, ok := uniqueStations[stationID]; !ok {
+			uniqueStations[stationID] = struct{}{}
+			filteredTicketInspectorList = append(filteredTicketInspectorList, ticketInspector)
+		}
+	}
+
+	return c.JSONPretty(http.StatusOK, filteredTicketInspectorList, "  ")
 }

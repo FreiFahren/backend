@@ -104,6 +104,7 @@ func InsertTicketInfo(timestamp *time.Time, message *string, author *int64, line
     INSERT INTO ticket_info (timestamp, message, author, line, station_name, station_id, direction_name, direction_id)
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
     `
+
 	// Convert *string and *int64 directly to interface{} for pgx
 	values := []interface{}{timestamp, message, author, line, stationName, stationId, directionName, directionId}
 
