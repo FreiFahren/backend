@@ -120,7 +120,7 @@ The request should be a `GET` request, with this example:
 
 Example:
 ```sh
-curl -X GET http://localhost:8080/data \
+curl -X GET http://localhost:8080/data?names=true \
      -H "Content-Type: application/json" 
 ```
 
