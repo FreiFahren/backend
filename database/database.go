@@ -2,22 +2,15 @@ package database
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
 	"log"
 	"os"
 	"time"
 
+	. "github.com/FreiFahren/backend/structs"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
-
-type TicketInfo struct {
-	Timestamp    time.Time
-	Station_ID   string
-	Line         sql.NullString
-	Direction_ID sql.NullString
-}
 
 var pool *pgxpool.Pool
 
