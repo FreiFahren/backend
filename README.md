@@ -149,10 +149,11 @@ It will return a json response with the content of the inspector sighting:
 The request should be a `GET` request, with this example:
 
 Example:
-curl -X GET http://localhost:8081/station?id=SU-S \
+```sh
+curl -X GET http://localhost:8080/station?id=SU-S \
      -H "Content-Type: application/json" 
-
+```
+It will return a string of the station name
 ```json
 "Spandau"
-
 ```
