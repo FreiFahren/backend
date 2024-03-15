@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
-	"time"
 
 	"github.com/FreiFahren/backend/database"
 	. "github.com/FreiFahren/backend/structs"
@@ -26,7 +25,7 @@ func IdToCoordinates(id string) (float64, float64, error) {
 	return station.Coordinates.Latitude, station.Coordinates.Longitude, nil
 }
 
-func GetLatestData(c echo.Context) error {
+func GetRecentTicketInspectorInfo(c echo.Context) error {
 
 	// Get the latest ticket inspector information from the database
 	TicketInfoList, err := database.GetLatestStationCoordinates()
@@ -35,25 +34,25 @@ func GetLatestData(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	// We fill up TicketInfoList with historic data, if we have less than 10 current entries
-	if len(TicketInfoList) < 10 {
-		historicDataList, err := database.GetHistoricStations(time.Now())
+	// // We fill up TicketInfoList with historic data, if we have less than 10 current entries
+	// if len(TicketInfoList) < 10 {
+	// 	historicDataList, err := database.GetHistoricStations(time.Now())
 
-		if err != nil {
-			return c.JSON(http.StatusInternalServerError, err.Error())
-		}
+	// 	if err != nil {
+	// 		return c.JSON(http.StatusInternalServerError, err.Error())
+	// 	}
 
-		for _, TicketInfo := range historicDataList {
+	// 	for _, TicketInfo := range historicDataList {
 
-			fmt.Println("Adding historic data...")
-			if len(TicketInfoList) > 10 {
-				break
-			}
+	// 		fmt.Println("Adding historic data...")
+	// 		if len(TicketInfoList) > 10 {
+	// 			break
+	// 		}
 
-			TicketInfoList = append(TicketInfoList, TicketInfo)
-			fmt.Println(TicketInfo.Station_ID)
-		}
-	}
+	// 		TicketInfoList = append(TicketInfoList, TicketInfo)
+	// 		fmt.Println(TicketInfo.Station_ID)
+	// 	}
+	// }
 
 	TicketInspectorList := make([]TicketInspector, 0)
 

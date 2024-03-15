@@ -44,9 +44,9 @@ type TicketInfo struct {
 // PostInspector.go
 
 type InspectorRequest struct {
-	Line        string `json:"line"`
-	StationName string `json:"station"`
-	Direction   string `json:"direction"`
+	Line          string `json:"line"`
+	StationName   string `json:"station"`
+	DirectionName string `json:"direction"`
 }
 
 type ResponseData struct {
