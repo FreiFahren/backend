@@ -35,6 +35,8 @@ func IdToCoordinates(id string) (float64, float64, error) {
 }
 
 func GetData(c echo.Context) error {
+	names := c.QueryParam("names")
+
 	// Get the latest ticket inspector information from the database
 	TicketInfoList, err := database.GetLatestStationCoordinates()
 
@@ -69,11 +71,13 @@ func GetData(c echo.Context) error {
 	for _, ticketInfo := range TicketInfoList {
 
 		cleanedStationId := strings.ReplaceAll(ticketInfo.Station_ID, "\n", "")
+
 		cleanedDirectionId := ""
 		cleanedLine := ""
 
 		if ticketInfo.Direction_ID.Valid {
 			cleanedDirectionId = strings.ReplaceAll(ticketInfo.Direction_ID.String, "\n", "")
+
 		}
 
 		if ticketInfo.Line.Valid {
@@ -85,6 +89,24 @@ func GetData(c echo.Context) error {
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, err.Error())
 		}
+
+		// If the names query parameter is set to true, we will convert the station id and direction id to the station name
+
+		if names == "true" {
+			cleanedStationId, err = IdToStationName(cleanedStationId)
+			if err != nil {
+				return c.JSON(http.StatusInternalServerError, err.Error())
+			}
+
+			if ticketInfo.Direction_ID.Valid {
+				cleanedDirectionId, err = IdToStationName(cleanedDirectionId)
+				if err != nil {
+					return c.JSON(http.StatusInternalServerError, err.Error())
+				}
+			}
+		}
+
+		// Create a new TicketInspector struct and append it to the slice
 
 		TicketInspectorInfo := TicketInspector{
 			StationID:   cleanedStationId,
