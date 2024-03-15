@@ -2,24 +2,14 @@ package api
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"time"
 
 	"github.com/FreiFahren/backend/database"
+	. "github.com/FreiFahren/backend/structs"
 	"github.com/labstack/echo/v4"
 )
-
-type InspectorRequest struct {
-	Line        string `json:"line"`
-	StationName string `json:"station"`
-	Direction   string `json:"direction"`
-}
-
-type ResponseData struct {
-	Line      string  `json:"line"`
-	Station   Station `json:"station"`
-	Direction Station `json:"direction"`
-}
 
 func PostInspector(c echo.Context) error {
 	var req InspectorRequest
@@ -28,7 +18,7 @@ func PostInspector(c echo.Context) error {
 	}
 
 	// Check if all parameters are empty
-	if req.Line == "" && req.StationName == "" && req.Direction == "" {
+	if req.Line == "" && req.StationName == "" && req.DirectionName == "" {
 		return echo.NewHTTPError(http.StatusBadRequest, "At least one of 'line', 'station', or 'direction' must be provided")
 	}
 
@@ -68,17 +58,19 @@ func processRequestData(req InspectorRequest) (*ResponseData, error) {
 		}
 	}
 
-	if req.Direction != "" {
-		if directionID, found := FindStationId(req.Direction, stations); found {
-			directionNamePtr = &req.Direction
+	if req.DirectionName != "" {
+		if directionID, found := FindStationId(req.DirectionName, stations); found {
+			directionNamePtr = &req.DirectionName
 			directionIDPtr = &directionID
-			data.Direction = Station{Name: req.Direction, ID: directionID}
+			data.Direction = Station{Name: req.DirectionName, ID: directionID}
 		} else {
 			return nil, fmt.Errorf("direction not found")
 		}
 	}
 
 	now := time.Now()
+
+	log.Printf("Inserted ticket info: %v", data)
 
 	// Directly pass the pointers for all parameters.
 	if err := database.InsertTicketInfo(
