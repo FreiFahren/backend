@@ -7,17 +7,9 @@ import (
 	"os"
 	"strings"
 
+	. "github.com/FreiFahren/backend/structs"
 	"github.com/labstack/echo/v4"
 )
-
-type Station struct {
-	ID          string `json:"id"`
-	Name        string `json:"name"`
-	Coordinates struct {
-		Latitude  float64 `json:"latitude"`
-		Longitude float64 `json:"longitude"`
-	} `json:"coordinates"`
-}
 
 func ReadFromFile(filePath string) (map[string]Station, error) {
 	file, err := os.Open(filePath)

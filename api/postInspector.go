@@ -7,20 +7,9 @@ import (
 	"time"
 
 	"github.com/FreiFahren/backend/database"
+	. "github.com/FreiFahren/backend/structs"
 	"github.com/labstack/echo/v4"
 )
-
-type InspectorRequest struct {
-	Line        string `json:"line"`
-	StationName string `json:"station"`
-	Direction   string `json:"direction"`
-}
-
-type ResponseData struct {
-	Line      string  `json:"line"`
-	Station   Station `json:"station"`
-	Direction Station `json:"direction"`
-}
 
 func PostInspector(c echo.Context) error {
 	var req InspectorRequest
