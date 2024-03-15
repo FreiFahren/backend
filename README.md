@@ -97,12 +97,62 @@ Example:
 ```sh
 curl -X GET http://localhost:8080/data \
      -H "Content-Type: application/json" 
+
+```
+
+```json
+[{
+    "Coordinates": [
+      52.52179049999999,
+      13.4136147
+    ],
+    "StationID": "SU-A",
+    "DirectionID": "SU-WIU",
+    "Line": "U8"
+  },
+]
+
+```
+
+- `/data?names=true` - This will return the names, instead of id
+
+The request should be a `GET` request, with this example:
+
+Example:
+```sh
+curl -X GET http://localhost:8080/data \
+     -H "Content-Type: application/json" 
 ```
 
 It will return a json response with the content of the inspector sighting:
 
+```json
+[{
+    "Coordinates": [
+      52.52179049999999,
+      13.4136147
+    ],
+    "StationID": "Alexanderplatz",
+    "DirectionID": "Wittenau",
+    "Line": "U8"
+  },
+]
+```
+
+
+
+### Receive the last known stations 15 mins ago
+
+- `/station` - This endpoint is used to GET the station name through the id
+
+
+The request should be a `GET` request, with this example:
+
+Example:
+curl -X GET http://localhost:8081/station?id=SU-S \
+     -H "Content-Type: application/json" 
 
 ```json
-[[latitude, longitude],[52.52179049999999,13.4136147],[..]]
+"Spandau"
 
 ```
