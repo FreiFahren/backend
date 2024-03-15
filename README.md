@@ -143,7 +143,7 @@ It will return a json response with the content of the inspector sighting:
 
 ### Receive the last known stations 15 mins ago
 
-- `/station` - This endpoint is used to GET the station name through the id
+- `/station?id=` - This endpoint is used to GET the station name through the id
 
 
 The request should be a `GET` request, with this example:
