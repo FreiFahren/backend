@@ -7,9 +7,17 @@ import (
 	"time"
 
 	"github.com/FreiFahren/backend/database"
-	. "github.com/FreiFahren/backend/structs"
 	"github.com/labstack/echo/v4"
 )
+
+// This is the struct that we will use to store the coordinates and the direction id and line
+// to return to the frontend
+type TicketInspector struct {
+	Coordinates []float64
+	StationID   string
+	DirectionID string
+	Line        string
+}
 
 func IdToCoordinates(id string) (float64, float64, error) {
 
@@ -26,7 +34,8 @@ func IdToCoordinates(id string) (float64, float64, error) {
 	return station.Coordinates.Latitude, station.Coordinates.Longitude, nil
 }
 
-func GetLatestData(c echo.Context) error {
+func GetData(c echo.Context) error {
+	names := c.QueryParam("names")
 
 	// Get the latest ticket inspector information from the database
 	TicketInfoList, err := database.GetLatestStationCoordinates()
@@ -75,56 +84,35 @@ func GetLatestData(c echo.Context) error {
 			cleanedLine = strings.ReplaceAll(ticketInfo.Line.String, "\n", "")
 		}
 
-		stationLat, stationLon, err := IdToCoordinates(cleanedStationId)
+		latitude, longitude, err := IdToCoordinates(cleanedStationId)
 
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, err.Error())
 		}
 
-		// Get the names
+		// If the names query parameter is set to true, we will convert the station id and direction id to the station name
 
-		stationName, err := IdToStationName(cleanedStationId)
-
-		if err != nil {
-			return c.JSON(http.StatusInternalServerError, err.Error())
-		}
-
-		directionName := ""
-		var directionLat float64 = 0
-		var directionLon float64 = 0
-
-		if ticketInfo.Direction_ID.Valid {
-			directionName, err = IdToStationName(cleanedDirectionId)
+		if names == "true" {
+			cleanedStationId, err = IdToStationName(cleanedStationId)
 			if err != nil {
 				return c.JSON(http.StatusInternalServerError, err.Error())
 			}
-			directionLat, directionLon, err = IdToCoordinates(cleanedDirectionId)
-			if err != nil {
-				return c.JSON(http.StatusInternalServerError, err.Error())
+
+			if ticketInfo.Direction_ID.Valid {
+				cleanedDirectionId, err = IdToStationName(cleanedDirectionId)
+				if err != nil {
+					return c.JSON(http.StatusInternalServerError, err.Error())
+				}
 			}
 		}
 
 		// Create a new TicketInspector struct and append it to the slice
 
 		TicketInspectorInfo := TicketInspector{
-			Timestamp: ticketInfo.Timestamp,
-			Station: Station{
-				ID:   cleanedStationId,
-				Name: stationName,
-				Coordinates: Coordinates{
-					Latitude:  stationLat,
-					Longitude: stationLon,
-				},
-			},
-			Direction: Station{
-				ID:   cleanedDirectionId,
-				Name: directionName,
-				Coordinates: Coordinates{
-					Latitude:  directionLat,
-					Longitude: directionLon,
-				},
-			},
-			Line: cleanedLine,
+			StationID:   cleanedStationId,
+			Coordinates: []float64{latitude, longitude},
+			DirectionID: cleanedDirectionId,
+			Line:        cleanedLine,
 		}
 
 		TicketInspectorList = append(TicketInspectorList, TicketInspectorInfo)
