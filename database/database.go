@@ -117,51 +117,6 @@ func InsertTicketInfo(timestamp *time.Time, message *string, author *int64, line
 	return nil
 }
 
-func GetHistoricStations(timestamp time.Time) ([]TicketInfo, error) {
-	// Extract hour and weekday
-	hour := timestamp.Hour()
-	weekday := timestamp.Weekday()
-
-	// get top 5 stations for the given hour and weekday
-	sql := `
-        SELECT station_id
-        FROM ticket_info
-        WHERE EXTRACT(HOUR FROM timestamp) = $1 AND EXTRACT(DOW FROM timestamp) = $2
-		AND station_name IS NOT NULL
-		AND station_id IS NOT NULL
-        GROUP BY station_id
-        ORDER BY COUNT(station_id) DESC
-        LIMIT 20;
-    `
-	// Execute query
-	rows, err := pool.Query(context.Background(), sql, hour, weekday)
-	if err != nil {
-		return nil, fmt.Errorf("query execution error: %w", err)
-	}
-	defer rows.Close()
-
-	var ticketInfoList []TicketInfo
-
-	for rows.Next() {
-		var ticketInfo TicketInfo
-
-		if err := rows.Scan(&ticketInfo.Station_ID); err != nil {
-			return nil, fmt.Errorf("error scanning row (historic data): %w", err)
-		}
-		ticketInfoList = append(ticketInfoList, ticketInfo)
-	}
-
-	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("error iterating rows (historic data): %w", err)
-	}
-
-	if len(ticketInfoList) == 0 {
-		fmt.Println("No historic data found")
-	}
-
-	return ticketInfoList, nil
-}
-
 func GetLatestStationCoordinates() ([]TicketInfo, error) {
 	sql := `SELECT timestamp, station_id, direction_id, line
             FROM ticket_info
