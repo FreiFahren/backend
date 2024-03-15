@@ -4,13 +4,13 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"log"
 	"os"
 	"time"
 
-	"github.com/jackc/pgx/v4"
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
-
-var conn *pgx.Conn
 
 type TicketInfo struct {
 	Timestamp    time.Time
@@ -19,8 +19,16 @@ type TicketInfo struct {
 	Direction_ID sql.NullString
 }
 
-func CreateConnection() {
-	var err error
+var pool *pgxpool.Pool
+
+func Config() *pgxpool.Config {
+	const defaultMaxConns = int32(4)
+	const defaultMinConns = int32(0)
+	const defaultMaxConnLifetime = time.Hour
+	const defaultMaxConnIdleTime = time.Minute * 30
+	const defaultHealthCheckPeriod = time.Minute
+	const defaultConnectTimeout = time.Second * 5
+
 	dbUrl := fmt.Sprintf("postgres://%s:%s@%s:%s/%s",
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASSWORD"),
@@ -28,22 +36,49 @@ func CreateConnection() {
 		os.Getenv("DB_PORT"),
 		os.Getenv("DB_NAME"))
 
-	conn, err = pgx.Connect(context.Background(), dbUrl)
+	dbConfig, err := pgxpool.ParseConfig(dbUrl)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
-		os.Exit(1)
+		log.Fatal("Failed to create a config, error: ", err)
 	}
-	fmt.Println("Connected to the database.")
+
+	dbConfig.MaxConns = defaultMaxConns
+	dbConfig.MinConns = defaultMinConns
+	dbConfig.MaxConnLifetime = defaultMaxConnLifetime
+	dbConfig.MaxConnIdleTime = defaultMaxConnIdleTime
+	dbConfig.HealthCheckPeriod = defaultHealthCheckPeriod
+	dbConfig.ConnConfig.ConnectTimeout = defaultConnectTimeout
+
+	dbConfig.BeforeAcquire = func(ctx context.Context, c *pgx.Conn) bool {
+		log.Println("Acquiring a connection...")
+		return true
+	}
+
+	dbConfig.AfterRelease = func(c *pgx.Conn) bool {
+		log.Println("Conncetion has been released")
+		return true
+	}
+
+	dbConfig.BeforeClose = func(c *pgx.Conn) {
+		log.Println("Closed the connection pool")
+	}
+
+	return dbConfig
 }
 
-func CloseConnection() {
-	if conn != nil {
-		err := conn.Close(context.Background())
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Failed to close database connection: %v\n", err)
-		} else {
-			fmt.Println("Database connection closed.")
-		}
+func CreatePool() {
+	var err error
+
+	p, err := pgxpool.NewWithConfig(context.Background(), Config())
+	if err != nil {
+		log.Fatal("Error while creating connection to the database!!")
+	}
+
+	pool = p
+
+}
+func ClosePool() {
+	if pool != nil {
+		pool.Close()
 	}
 }
 
@@ -61,7 +96,8 @@ func CreateTicketInfoTable() {
 		direction_id VARCHAR(10)
 	);
 	`
-	_, err := conn.Exec(context.Background(), sql)
+
+	_, err := pool.Exec(context.Background(), sql)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to create table: %v\n", err)
 		os.Exit(1)
@@ -70,6 +106,7 @@ func CreateTicketInfoTable() {
 }
 
 func InsertTicketInfo(timestamp *time.Time, message *string, author *int64, line, stationName, stationId, directionName, directionId *string) error {
+
 	sql := `
     INSERT INTO ticket_info (timestamp, message, author, line, station_name, station_id, direction_name, direction_id)
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
@@ -77,7 +114,9 @@ func InsertTicketInfo(timestamp *time.Time, message *string, author *int64, line
 	// Convert *string and *int64 directly to interface{} for pgx
 	values := []interface{}{timestamp, message, author, line, stationName, stationId, directionName, directionId}
 
-	_, err := conn.Exec(context.Background(), sql, values...)
+	_, err := pool.Exec(context.Background(), sql, values...)
+	log.Println("Inserting ticket info...")
+
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to insert ticket info: %v\n", err)
 		return err
@@ -102,7 +141,7 @@ func GetHistoricStations(timestamp time.Time) ([]TicketInfo, error) {
         LIMIT 20;
     `
 	// Execute query
-	rows, err := conn.Query(context.Background(), sql, hour, weekday)
+	rows, err := pool.Query(context.Background(), sql, hour, weekday)
 	if err != nil {
 		return nil, fmt.Errorf("query execution error: %w", err)
 	}
@@ -137,7 +176,8 @@ func GetLatestStationCoordinates() ([]TicketInfo, error) {
             AND station_name IS NOT NULL
 			AND station_id IS NOT NULL;`
 
-	rows, err := conn.Query(context.Background(), sql)
+	rows, err := pool.Query(context.Background(), sql)
+	log.Println("Getting Data...")
 
 	if err != nil {
 		return nil, fmt.Errorf("query execution error: %w", err)
