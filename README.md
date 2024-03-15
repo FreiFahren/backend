@@ -95,37 +95,49 @@ The request should be a `GET` request, with this example:
 
 Example:
 ```sh
-curl -X GET http://localhost:8080/latest \
+curl -X GET http://localhost:8080/data \
      -H "Content-Type: application/json" 
 
 ```
 
 ```json
-[
-  {
-    "timestamp": "2024-03-15T15:24:32.692585Z",
-    "station": {
-      "id": "U-UDU",
-      "name": "Unter den Linden",
-      "coordinates": {
-        "latitude": 52.5170229,
-        "longitude": 13.3890441
-      }
-    },
-    "direction": {
-      "id": "SU-HBF",
-      "name": "Hauptbahnhof",
-      "coordinates": {
-        "latitude": 52.526556,
-        "longitude": 13.369842
-      }
-    },
-    "line": "U5"
+[{
+    "Coordinates": [
+      52.52179049999999,
+      13.4136147
+    ],
+    "StationID": "SU-A",
+    "DirectionID": "SU-WIU",
+    "Line": "U8"
   },
 ]
 
 ```
 
+- `/data?names=true` - This will return the names, instead of id
+
+The request should be a `GET` request, with this example:
+
+Example:
+```sh
+curl -X GET http://localhost:8080/data?names=true \
+     -H "Content-Type: application/json" 
+```
+
+It will return a json response with the content of the inspector sighting:
+
+```json
+[{
+    "Coordinates": [
+      52.52179049999999,
+      13.4136147
+    ],
+    "StationID": "Alexanderplatz",
+    "DirectionID": "Wittenau",
+    "Line": "U8"
+  },
+]
+```
 
 
 
