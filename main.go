@@ -16,15 +16,20 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	database.CreateConnection()
+	// Create a new connection pool, for concurrency
+	database.CreatePool()
+
+	if err != nil {
+		log.Fatal("Error while creating a pool :(")
+	}
+
+	e := echo.New()
 
 	// Close the database connection when the main function returns
-	defer database.CloseConnection()
+	defer database.ClosePool()
 
 	// Ensure the required table exists
 	database.CreateTicketInfoTable()
-
-	e := echo.New()
 
 	// Return the id for given name
 	e.GET("/id", api.GetStationId)
