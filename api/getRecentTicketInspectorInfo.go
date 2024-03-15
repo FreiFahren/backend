@@ -144,5 +144,6 @@ func GetRecentTicketInspectorInfo(c echo.Context) error {
 		}
 	}
 
+	// Return the data to the frontend
 	return c.JSONPretty(http.StatusOK, filteredTicketInspectorList, "  ")
 }
