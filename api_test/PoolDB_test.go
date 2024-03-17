@@ -15,7 +15,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-var pool *pgxpool.Pool
+var testPool *pgxpool.Pool
 
 func CreatePoolTestTable() {
 	sql := `
@@ -32,7 +32,7 @@ func CreatePoolTestTable() {
 	);
 	`
 
-	_, err := pool.Exec(context.Background(), sql)
+	_, err := testPool.Exec(context.Background(), sql)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to create pool table: %v\n", err)
 		os.Exit(1)
@@ -50,7 +50,7 @@ func InsertPoolInfo(timestamp *time.Time, message *string, author *int64, line, 
 	// Convert *string and *int64 directly to interface{} for pgx
 	values := []interface{}{timestamp, message, author, line, stationName, stationId, directionName, directionId}
 
-	_, err := pool.Exec(context.Background(), sql, values...)
+	_, err := testPool.Exec(context.Background(), sql, values...)
 	log.Println("Inserting ticket info to pool_test...")
 
 	if err != nil {
@@ -68,7 +68,7 @@ func CreateTestPool() {
 		log.Fatal("Error while creating connection to the database!!")
 	}
 
-	pool = p
+	testPool = p
 
 }
 
@@ -81,15 +81,16 @@ func setup() {
 	}
 
 	CreateTestPool()
-
+	database.CreatePool()
 	CreatePoolTestTable()
 }
 
 func teardown() {
 
-	if pool != nil {
-		pool.Close()
+	if testPool != nil {
+		testPool.Close()
 	}
+	database.ClosePool()
 
 }
 
