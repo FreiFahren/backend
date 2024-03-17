@@ -14,7 +14,7 @@ import (
 )
 
 func GetAllStationsAndLines(c echo.Context) error {
-	var suggestions = types.Suggestions{}
+	var StationsAndLinesList = types.StationsAndLinesList{}
 
 	var stationList = make([]types.StationList, 0)
 
@@ -38,14 +38,14 @@ func GetAllStationsAndLines(c echo.Context) error {
 
 	// Create the lines list
 	for line, stations := range lines {
-		suggestions.Lines = append(suggestions.Lines, types.Lines{Name: line, Stations: stations})
+		StationsAndLinesList.Lines = append(StationsAndLinesList.Lines, types.Lines{Name: line, Stations: stations})
 
 		fmt.Println("Line:", line)
 		fmt.Println("Stations:", stations)
 	}
 
 	// Add the station list to the suggestions
-	suggestions.StationList = stationList
+	StationsAndLinesList.StationList = stationList
 
 	// // Sort the lines alphabetically
 	// sort.Strings(suggestions.Lines)
@@ -55,7 +55,7 @@ func GetAllStationsAndLines(c echo.Context) error {
 
 	// Return the suggestions
 
-	return c.JSONPretty(http.StatusOK, suggestions, "  ")
+	return c.JSONPretty(http.StatusOK, StationsAndLinesList, "  ")
 }
 
 func ReadLines(filepath string) (map[string][]string, error) {
