@@ -89,54 +89,41 @@ Example:
 
 ### Receive the last known stations 15 mins ago
 
-- `/data` - This endpoint is used to GET all sightings from the last 15 minutes
+- `/recent` - This endpoint is used to GET all sightings from the last 15 minutes
 
 The request should be a `GET` request, with this example:
 
 Example:
 ```sh
-curl -X GET http://localhost:8080/data \
+curl -X GET http://localhost:8080/recent \
      -H "Content-Type: application/json" 
 
 ```
 
 ```json
-[{
-    "Coordinates": [
-      52.52179049999999,
-      13.4136147
-    ],
-    "StationID": "SU-A",
-    "DirectionID": "SU-WIU",
-    "Line": "U8"
+[
+  {
+    "timestamp": "2024-03-17T14:42:25.932507Z",
+    "station": {
+      "id": "SU-HMS",
+      "name": "Hermannstraße",
+      "coordinates": {
+        "latitude": 52.467622,
+        "longitude": 13.4309698
+      }
+    },
+    "direction": {
+      "id": "",
+      "name": "",
+      "coordinates": {
+        "latitude": 0,
+        "longitude": 0
+      }
+    },
+    "line": "U8"
   },
 ]
 
-```
-
-- `/data?names=true` - This will return the names, instead of id
-
-The request should be a `GET` request, with this example:
-
-Example:
-```sh
-curl -X GET http://localhost:8080/data?names=true \
-     -H "Content-Type: application/json" 
-```
-
-It will return a json response with the content of the inspector sighting:
-
-```json
-[{
-    "Coordinates": [
-      52.52179049999999,
-      13.4136147
-    ],
-    "StationID": "Alexanderplatz",
-    "DirectionID": "Wittenau",
-    "Line": "U8"
-  },
-]
 ```
 
 
