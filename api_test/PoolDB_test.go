@@ -13,11 +13,18 @@ import (
 )
 
 func setup() {
+	// Log the current directory
+	dir, err := os.Getwd()
+	if err != nil {
+		log.Fatal("Error getting current directory")
+	}
+
 	// Load .env file
 	os.Chdir("..")
-	err := godotenv.Load()
+	err = godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
+		log.Fatalf("Current directory: %s", dir)
 	}
 
 	database.CreatePool()
