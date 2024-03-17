@@ -9,13 +9,11 @@ import (
 	"io/ioutil"
 	"os"
 
-	"sort"
-
 	types "github.com/FreiFahren/backend/structs"
 	"github.com/labstack/echo/v4"
 )
 
-func GetSuggestions(c echo.Context) error {
+func GetAllStationsAndLines(c echo.Context) error {
 	var suggestions = types.Suggestions{}
 
 	var stationList = make([]types.StationList, 0)
@@ -38,19 +36,22 @@ func GetSuggestions(c echo.Context) error {
 		stationList = append(stationList, types.StationList{StationName: station.Name, StationId: id})
 	}
 
-	// Create the lines list (using only the keys)
-	for line := range lines {
-		suggestions.Lines = append(suggestions.Lines, line)
+	// Create the lines list
+	for line, stations := range lines {
+		suggestions.Lines = append(suggestions.Lines, types.Lines{Name: line, Stations: stations})
+
+		fmt.Println("Line:", line)
+		fmt.Println("Stations:", stations)
 	}
 
 	// Add the station list to the suggestions
 	suggestions.StationList = stationList
 
-	// Sort the lines alphabetically
-	sort.Strings(suggestions.Lines)
-	sort.Slice(suggestions.StationList, func(i, j int) bool {
-		return suggestions.StationList[i].StationName < suggestions.StationList[j].StationName
-	})
+	// // Sort the lines alphabetically
+	// sort.Strings(suggestions.Lines)
+	// sort.Slice(suggestions.StationList, func(i, j int) bool {
+	// 	return suggestions.StationList[i].StationName < suggestions.StationList[j].StationName
+	// })
 
 	// Return the suggestions
 

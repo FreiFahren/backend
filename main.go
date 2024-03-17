@@ -41,7 +41,7 @@ func main() {
 	e.GET("/station", api.GetStationName)
 
 	// Return all stations with their id (used for suggestions on the frontend)
-	e.GET("/suggestions", api.GetSuggestions)
+	e.GET("/list", api.GetAllStationsAndLines)
 
 	// Post a new ticket inspector
 	e.POST("/newInspector", api.PostInspector)

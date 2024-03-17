@@ -58,12 +58,13 @@ type ResponseData struct {
 // getSuggestions.go
 
 type Suggestions struct {
-	Lines       []string      `json:"lines"`
+	Lines       []Lines       `json:"lines"`
 	StationList []StationList `json:"stations"`
 }
 
 type Lines struct {
-	Line []string `json:"line"`
+	Name     string   `json:"name"`
+	Stations []string `json:"stations"`
 }
 
 type StationList struct {
