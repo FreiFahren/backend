@@ -20,7 +20,7 @@ func setup() {
 	}
 
 	// Load .env file
-	os.Chdir("..")
+
 	err = godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
