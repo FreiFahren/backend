@@ -55,7 +55,7 @@ type ResponseData struct {
 	Direction Station `json:"direction"`
 }
 
-// getSuggestions.go
+// getAllStationsAndLines.go
 
 type StationListEntry struct {
 	Name        string           `json:"name"`
