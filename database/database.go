@@ -54,7 +54,7 @@ func Config() *pgxpool.Config {
 	}
 
 	dbConfig.AfterRelease = func(c *pgx.Conn) bool {
-		log.Println("Conncetion has been released")
+		log.Println("Connection has been released")
 		return true
 	}
 

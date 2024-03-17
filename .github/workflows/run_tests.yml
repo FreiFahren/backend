@@ -27,6 +27,9 @@ jobs:
           echo export DB_PASSWORD="${{ secrets.DB_PASSWORD }}"  >> .env
           echo export DB_NAME = "${{ secrets.DB_NAME }}"  >> .env  
           cat .env
+          pwd
+          ls
+
           
       - name: Build
         run: go build
