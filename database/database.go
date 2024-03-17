@@ -105,29 +105,6 @@ func CreateTicketInfoTable() {
 	fmt.Println("Table created or already exists.")
 }
 
-func CreatePoolTestTable() {
-	sql := `
-	CREATE TABLE IF NOT EXISTS pool_test (
-		id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-		timestamp TIMESTAMP NOT NULL DEFAULT NOW(),
-		message TEXT,
-		author BIGINT,
-		line VARCHAR(3),
-		station_name VARCHAR(255),
-		station_id VARCHAR(10),
-		direction_name VARCHAR(255),
-		direction_id VARCHAR(10)
-	);
-	`
-
-	_, err := pool.Exec(context.Background(), sql)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed to create pool table: %v\n", err)
-		os.Exit(1)
-	}
-	fmt.Println("Table created or already exists.")
-}
-
 func InsertTicketInfo(timestamp *time.Time, message *string, author *int64, line, stationName, stationId, directionName, directionId *string) error {
 
 	sql := `
@@ -140,26 +117,6 @@ func InsertTicketInfo(timestamp *time.Time, message *string, author *int64, line
 
 	_, err := pool.Exec(context.Background(), sql, values...)
 	log.Println("Inserting ticket info...")
-
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed to insert ticket info: %v\n", err)
-		return err
-	}
-	return nil
-}
-
-func InsertPoolInfo(timestamp *time.Time, message *string, author *int64, line, stationName, stationId, directionName, directionId *string) error {
-
-	sql := `
-    INSERT INTO pool_test (timestamp, message, author, line, station_name, station_id, direction_name, direction_id)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
-    `
-
-	// Convert *string and *int64 directly to interface{} for pgx
-	values := []interface{}{timestamp, message, author, line, stationName, stationId, directionName, directionId}
-
-	_, err := pool.Exec(context.Background(), sql, values...)
-	log.Println("Inserting ticket info to pool_test...")
 
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to insert ticket info: %v\n", err)
