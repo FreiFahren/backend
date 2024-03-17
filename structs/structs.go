@@ -54,3 +54,21 @@ type ResponseData struct {
 	Station   Station `json:"station"`
 	Direction Station `json:"direction"`
 }
+
+// getSuggestions.go
+
+type StationListEntry struct {
+	Name        string           `json:"name"`
+	Coordinates CoordinatesEntry `json:"coordinates"`
+	Lines       []string         `json:"lines"`
+}
+
+type CoordinatesEntry struct {
+	Latitude  float64 `json:"latitude"`
+	Longitude float64 `json:"longitude"`
+}
+
+type Data struct {
+	Lines    []map[string][]string       `json:"lines"`
+	Stations map[string]StationListEntry `json:"stations"`
+}

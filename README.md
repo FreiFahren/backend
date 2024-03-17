@@ -128,19 +128,43 @@ curl -X GET http://localhost:8080/recent \
 
 
 
-### Receive the last known stations 15 mins ago
+### Get all stations and lines list
 
-- `/station?id=` - This endpoint is used to GET the station name through the id
+- `/list` - This endpoint is used to GET an overview of all stations and lines, and their connections
 
 
 The request should be a `GET` request, with this example:
 
 Example:
 ```sh
-curl -X GET http://localhost:8080/station?id=SU-S \
+curl -X GET http://localhost:8080/list \
      -H "Content-Type: application/json" 
 ```
-It will return a string of the station name
+It will return a json with this body:
 ```json
-"Spandau"
+{
+  "lines": [
+    {
+      "U1": ["SU-WA", "etc.."]
+    },
+    
+    
+  ],
+  "stations": {
+    "U-Ado": {
+      "name": "Adenauer Platz",
+            "coordinates": {
+                "latitude": 52.4998948,
+                "longitude": 13.3071423
+            },
+            "lines": [
+                "U7"
+            ]
+        },
+
+
+
+    }
+}
+
 ```
