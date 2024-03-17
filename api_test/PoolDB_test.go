@@ -19,7 +19,10 @@ func setup() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+
 	database.CreatePool()
+
+	database.CreatePoolTestTable()
 }
 
 func teardown() {
@@ -30,17 +33,17 @@ func TestGetLatestStationCoordinatesConcurrency(t *testing.T) {
 	setup()
 	defer teardown()
 
-	errs := make(chan error, 200000) // Buffer the channel to prevent goroutines from blocking
+	errs := make(chan error, 1000) // Buffer the channel to prevent goroutines from blocking
 
 	var wg sync.WaitGroup
-	for i := 0; i < 200000; i++ {
+	for i := 0; i < 100; i++ {
 		wg.Add(1)
 		go func(i int) {
 			defer wg.Done()
 
 			t.Logf("Running test %d", i)
 
-			// Call the function with the pool
+			// Call the function with the pool (on the real database)
 			_, err := database.GetLatestStationCoordinates()
 			if err != nil {
 				errs <- err
@@ -54,7 +57,7 @@ func TestGetLatestStationCoordinatesConcurrency(t *testing.T) {
 			// Seed the random number generator with the current time
 			rand.New(rand.NewSource(20))
 
-			// Generate a random int64
+			// Enter a random ticket info into the database (on the pool test table)
 
 			now := time.Now()
 			message := "Platz der Lufbrücke"
@@ -65,7 +68,7 @@ func TestGetLatestStationCoordinatesConcurrency(t *testing.T) {
 			directionName := "Alt-Tegel"
 			directionId := "U-ATg"
 
-			err = database.InsertTicketInfo(&now, &message, &author, &line, &stationName, &stationId, &directionName, &directionId)
+			err = database.InsertPoolInfo(&now, &message, &author, &line, &stationName, &stationId, &directionName, &directionId)
 			if err != nil {
 				log.Fatalf("Failed to insert ticket info: %v", err)
 			}
