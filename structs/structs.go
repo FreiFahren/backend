@@ -55,19 +55,20 @@ type ResponseData struct {
 	Direction Station `json:"direction"`
 }
 
-// getAllStationsAndLines.go
+// getSuggestions.go
 
-type StationsAndLinesList struct {
-	Lines       []Lines       `json:"lines"`
-	StationList []StationList `json:"stations"`
+type StationListEntry struct {
+	Name        string           `json:"name"`
+	Coordinates CoordinatesEntry `json:"coordinates"`
+	Lines       []string         `json:"lines"`
 }
 
-type Lines struct {
-	Name     string   `json:"name"`
-	Stations []string `json:"stations"`
+type CoordinatesEntry struct {
+	Latitude  float64 `json:"latitude"`
+	Longitude float64 `json:"longitude"`
 }
 
-type StationList struct {
-	StationName string `json:"stationName"`
-	StationId   string `json:"stationId"`
+type Data struct {
+	Lines    []map[string][]string       `json:"lines"`
+	Stations map[string]StationListEntry `json:"stations"`
 }

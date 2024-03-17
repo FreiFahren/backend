@@ -1,10 +1,8 @@
 package api
 
 import (
-	"fmt"
 	"log"
 	"net/http"
-	"sort"
 
 	"encoding/json"
 	"io/ioutil"
@@ -15,69 +13,32 @@ import (
 )
 
 func GetAllStationsAndLines(c echo.Context) error {
-	var StationsAndLinesList = types.StationsAndLinesList{}
+	var StationsAndLinesList types.Data
+	StationsAndLinesList, err := ReadStationsAndLinesList("data/StationsAndLinesList.json")
 
-	var stationList = make([]types.StationList, 0)
-
-	// Open the files and read lines and stations
-	stations, err := ReadFromFile("data/stations.json")
 	if err != nil {
-		fmt.Println("Error reading stations:", err)
-		return err
+		log.Fatalf("Error reading lines: %v", err)
 	}
-
-	lines, err := ReadLines("data/lines.json")
-	if err != nil {
-		fmt.Println("Error reading lines:", err)
-		return err
-	}
-
-	// Create the station list with all the names and ids
-	for id, station := range stations {
-		stationList = append(stationList, types.StationList{StationName: station.Name, StationId: id})
-	}
-
-	// Create the lines list
-	for line, stations := range lines {
-		StationsAndLinesList.Lines = append(StationsAndLinesList.Lines, types.Lines{Name: line, Stations: stations})
-
-		fmt.Println("Line:", line)
-		fmt.Println("Stations:", stations)
-	}
-
-	// Add the station list to the suggestions
-	StationsAndLinesList.StationList = stationList
-
-	// Sort the lines alphabetically
-	sort.Slice(StationsAndLinesList.Lines, func(i, j int) bool {
-		return StationsAndLinesList.Lines[i].Name < StationsAndLinesList.Lines[j].Name
-	})
-	sort.Slice(StationsAndLinesList.StationList, func(i, j int) bool {
-		return StationsAndLinesList.StationList[i].StationName < StationsAndLinesList.StationList[j].StationName
-	})
-
-	// Return the suggestions
-
 	return c.JSONPretty(http.StatusOK, StationsAndLinesList, "  ")
 }
 
-func ReadLines(filepath string) (map[string][]string, error) {
+func ReadStationsAndLinesList(filepath string) (types.Data, error) {
 	file, err := os.Open(filepath)
 	if err != nil {
-		return nil, err
+		return types.Data{}, err
 	}
 	defer file.Close()
 
 	byteValue, err := ioutil.ReadAll(file)
 	if err != nil {
-		return nil, err
+		return types.Data{}, err
 	}
 
-	var lines map[string][]string
-	err = json.Unmarshal(byteValue, &lines)
+	var data types.Data
+	err = json.Unmarshal(byteValue, &data)
 	if err != nil {
 		log.Fatalf("Error reading lines: %v", err)
 	}
 
-	return lines, nil
+	return data, nil
 }
