@@ -29,6 +29,7 @@ jobs:
           cat .env
           pwd
           ls
+
           
       - name: Build
         run: go build
