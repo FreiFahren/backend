@@ -40,8 +40,13 @@ func main() {
 	// Return the name for given id
 	e.GET("/station", api.GetStationName)
 
+	// Return all stations with their id (used for suggestions on the frontend)
+	e.GET("/suggestions", api.GetSuggestions)
+
 	// Post a new ticket inspector
 	e.POST("/newInspector", api.PostInspector)
 
 	e.Start(":8080")
+
+	defer e.Close()
 }
