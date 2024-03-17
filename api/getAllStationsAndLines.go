@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"sort"
 
 	"encoding/json"
 	"io/ioutil"
@@ -47,11 +48,13 @@ func GetAllStationsAndLines(c echo.Context) error {
 	// Add the station list to the suggestions
 	StationsAndLinesList.StationList = stationList
 
-	// // Sort the lines alphabetically
-	// sort.Strings(suggestions.Lines)
-	// sort.Slice(suggestions.StationList, func(i, j int) bool {
-	// 	return suggestions.StationList[i].StationName < suggestions.StationList[j].StationName
-	// })
+	// Sort the lines alphabetically
+	sort.Slice(StationsAndLinesList.Lines, func(i, j int) bool {
+		return StationsAndLinesList.Lines[i].Name < StationsAndLinesList.Lines[j].Name
+	})
+	sort.Slice(StationsAndLinesList.StationList, func(i, j int) bool {
+		return StationsAndLinesList.StationList[i].StationName < StationsAndLinesList.StationList[j].StationName
+	})
 
 	// Return the suggestions
 
