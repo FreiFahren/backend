@@ -60,6 +60,18 @@ func InsertPoolInfo(timestamp *time.Time, message *string, author *int64, line, 
 	return nil
 }
 
+func CreateTestPool() {
+	var err error
+
+	p, err := pgxpool.NewWithConfig(context.Background(), database.Config())
+	if err != nil {
+		log.Fatal("Error while creating connection to the database!!")
+	}
+
+	pool = p
+
+}
+
 func setup() {
 	var err error
 
@@ -68,13 +80,17 @@ func setup() {
 		log.Fatal("Error loading .env file")
 	}
 
-	database.CreatePool()
+	CreateTestPool()
 
 	CreatePoolTestTable()
 }
 
 func teardown() {
-	database.ClosePool()
+
+	if pool != nil {
+		pool.Close()
+	}
+
 }
 
 func TestGetLatestStationCoordinatesConcurrency(t *testing.T) {
