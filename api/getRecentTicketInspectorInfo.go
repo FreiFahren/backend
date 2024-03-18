@@ -132,16 +132,19 @@ func GetRecentTicketInspectorInfo(c echo.Context) error {
 
 	}
 
-	// Remove duplicate stations
-	uniqueStations := make(map[string]struct{})
-	filteredTicketInspectorList := make([]TicketInspector, 0)
+	// Remove duplicate stations, and only keep the latest timestamp
+	uniqueStations := make(map[string]TicketInspector)
+	filteredTicketInspectorList := []TicketInspector{}
 
 	for _, ticketInspector := range TicketInspectorList {
 		stationID := ticketInspector.Station.ID
-		if _, ok := uniqueStations[stationID]; !ok {
-			uniqueStations[stationID] = struct{}{}
-			filteredTicketInspectorList = append(filteredTicketInspectorList, ticketInspector)
+		if existingInspector, ok := uniqueStations[stationID]; !ok || ticketInspector.Timestamp.After(existingInspector.Timestamp) {
+			uniqueStations[stationID] = ticketInspector
 		}
+	}
+
+	for _, ticketInspector := range uniqueStations {
+		filteredTicketInspectorList = append(filteredTicketInspectorList, ticketInspector)
 	}
 
 	// Return the data to the frontend
