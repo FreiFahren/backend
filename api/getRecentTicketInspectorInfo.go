@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"net/http"
+	"sort"
 	"strings"
 	"time"
 
@@ -146,6 +147,14 @@ func GetRecentTicketInspectorInfo(c echo.Context) error {
 	for _, ticketInspector := range uniqueStations {
 		filteredTicketInspectorList = append(filteredTicketInspectorList, ticketInspector)
 	}
+
+	// We sort the list, as it is always shuffled on api call, which makes the frontend flicker
+	sort.Slice(filteredTicketInspectorList, func(i, j int) bool {
+		if filteredTicketInspectorList[i].Timestamp.Equal(filteredTicketInspectorList[j].Timestamp) {
+			return filteredTicketInspectorList[i].Station.Name < filteredTicketInspectorList[j].Station.Name
+		}
+		return filteredTicketInspectorList[i].Timestamp.After(filteredTicketInspectorList[j].Timestamp)
+	})
 
 	// Return the data to the frontend
 	return c.JSONPretty(http.StatusOK, filteredTicketInspectorList, "  ")
