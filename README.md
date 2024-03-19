@@ -130,7 +130,7 @@ Response:
 
 If there is no 'If-Modified-Since' header, it will return the same response as the previous example.
 
-If the 'If-Modified-Since' header is after the last known sighting of an inspector, it will return a 304 Not Modified response.
+If the 'If-Modified-Since' header is after the last known sighting of an inspector, it will return a `304 Not Modified` response.
 
 
 ### Get all stations and lines list
@@ -166,9 +166,6 @@ It will return a json with this body:
                 "U7"
             ]
         },
-
-
-
     }
 }
 
