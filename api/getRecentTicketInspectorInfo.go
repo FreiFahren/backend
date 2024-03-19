@@ -13,6 +13,32 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+func GetRecentTicketInspectorInfo(c echo.Context) error {
+	ticketInfoList, err := database.GetLatestStationCoordinates()
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	ticketInfoList, err = FetchAndAddHistoricData(ticketInfoList)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	ticketInspectorList := []structs.TicketInspector{}
+	for _, ticketInfo := range ticketInfoList {
+		//
+		ticketInspector, err := constructTicketInspectorInfo(ticketInfo)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, err.Error())
+		}
+		ticketInspectorList = append(ticketInspectorList, ticketInspector)
+	}
+
+	filteredTicketInspectorList := RemoveDuplicateStations(ticketInspectorList)
+
+	return c.JSONPretty(http.StatusOK, filteredTicketInspectorList, "  ")
+}
+
 func IdToCoordinates(id string) (float64, float64, error) {
 
 	stations, err := ReadFromFile("data/stations.json")
@@ -70,7 +96,7 @@ func FetchAndAddHistoricData(ticketInfoList []database.TicketInfo) ([]database.T
 	return ticketInfoList, nil
 }
 
-func ProcessTicketInfo(ticketInfo database.TicketInfo) (structs.TicketInspector, error) {
+func constructTicketInspectorInfo(ticketInfo database.TicketInfo) (structs.TicketInspector, error) {
 	cleanedStationId := strings.ReplaceAll(ticketInfo.Station_ID, "\n", "")
 	cleanedDirectionId := strings.ReplaceAll(ticketInfo.Direction_ID.String, "\n", "")
 	cleanedLine := strings.ReplaceAll(ticketInfo.Line.String, "\n", "")
@@ -112,30 +138,4 @@ func ProcessTicketInfo(ticketInfo database.TicketInfo) (structs.TicketInspector,
 		Line: cleanedLine,
 	}
 	return ticketInspectorInfo, nil
-}
-
-func GetRecentTicketInspectorInfo(c echo.Context) error {
-	ticketInfoList, err := database.GetLatestStationCoordinates()
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
-	}
-
-	// Now correctly typed to accept the slice of database.TicketInfo
-	ticketInfoList, err = FetchAndAddHistoricData(ticketInfoList)
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
-	}
-
-	ticketInspectorList := []structs.TicketInspector{}
-	for _, ticketInfo := range ticketInfoList {
-		ticketInspector, err := ProcessTicketInfo(ticketInfo)
-		if err != nil {
-			return c.JSON(http.StatusInternalServerError, err.Error())
-		}
-		ticketInspectorList = append(ticketInspectorList, ticketInspector)
-	}
-
-	filteredTicketInspectorList := RemoveDuplicateStations(ticketInspectorList)
-
-	return c.JSONPretty(http.StatusOK, filteredTicketInspectorList, "  ")
 }
