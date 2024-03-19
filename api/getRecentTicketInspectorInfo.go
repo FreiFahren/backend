@@ -13,6 +13,26 @@ import (
 )
 
 func GetRecentTicketInspectorInfo(c echo.Context) error {
+	// fetch the most recent update time from the database
+	lastModified, err := database.GetLatestUpdateTime()
+	fmt.Println("Last modified time: ", lastModified)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	// Parse the If-Modified-Since header from the request
+	ifModifiedSince := c.Request().Header.Get("If-Modified-Since")
+	if ifModifiedSince != "" {
+		ifModTime, err := time.Parse(http.TimeFormat, ifModifiedSince)
+		if err == nil && !lastModified.After(ifModTime) {
+			fmt.Println("Data hasn't been modified since the provided time")
+			// Data hasn't been modified since the provided time, return 304
+			return c.NoContent(http.StatusNotModified)
+		}
+	}
+
+	// Proceed with fetching and processing the data if it was modified
+	// or if the If-Modified-Since header was not provided
 	ticketInfoList, err := database.GetLatestStationCoordinates()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())

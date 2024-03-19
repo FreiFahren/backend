@@ -203,3 +203,17 @@ func GetLatestStationCoordinates() ([]TicketInfo, error) {
 
 	return ticketInfoList, nil
 }
+
+func GetLatestUpdateTime() (time.Time, error) {
+	var lastUpdateTime time.Time
+
+	sql := `SELECT MAX(timestamp) FROM ticket_info;`
+
+	err := pool.QueryRow(context.Background(), sql).Scan(&lastUpdateTime)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Failed to get latest update time: %v\n", err)
+		return time.Time{}, err
+	}
+
+	return lastUpdateTime, nil
+}
