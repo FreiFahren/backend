@@ -37,7 +37,6 @@ func GetRecentTicketInspectorInfo(c echo.Context) error {
 
 	ticketInspectorList := []structs.TicketInspector{}
 	for _, ticketInfo := range ticketInfoList {
-		//
 		ticketInspector, err := constructTicketInspectorInfo(ticketInfo)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, err.Error())
