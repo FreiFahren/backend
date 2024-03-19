@@ -52,14 +52,14 @@ We have several API endpoints that allow users to interact with the application.
 The request should be a `GET` request with the following query parameters:
     - `name` - The name of the station
 
-Example:
+**Example:**
 ```sh
 curl -X GET "http://localhost:8080/id?name=alexanderplatz"
 ```
 
 It will return the id as a text response.
 
-Example:
+**Response:**
 ```sh
 "SU-A"
 ```
@@ -82,7 +82,7 @@ curl -X POST http://localhost:8080/newInspector \
 
 It will return a json response with the content of the inspector sighting.
 
-Example:
+**Response:**
 ```json
 {"line":"S7","station":{"id":"SU-A","name":"Alexanderplatz"},"direction":{"id":"S-Ah","name":"Ahrensfelde"}}
 ```
@@ -93,15 +93,14 @@ Example:
 
 The request should be a `GET` request, with this example, where the header timestamp is before the last known sighting of an inspector.:
 
-Example:
+**Example:**
 ```sh
 curl -X GET http://localhost:8080/recent \
      -H "If-Modified-Since: Sat, 29 Oct 2024 19:43:31 GMT"
 
 ```
 
-Response:
-
+**Response:**
 ```json
 [
   {
@@ -140,12 +139,13 @@ If the 'If-Modified-Since' header is after the last known sighting of an inspect
 
 The request should be a `GET` request, with this example:
 
-Example:
+**Example:**
 ```sh
 curl -X GET http://localhost:8080/list \
      -H "Content-Type: application/json" 
 ```
-It will return a json with this body:
+
+**Response:**
 ```json
 {
   "lines": [
