@@ -56,12 +56,16 @@ func CheckIfModifiedSince(c echo.Context) (bool, error) {
 	}
 
 	ifModifiedSince := c.Request().Header.Get("If-Modified-Since")
-	if ifModifiedSince != "" {
-		requestedModificationTime, err := time.Parse(http.TimeFormat, ifModifiedSince)
-		// check if the If-Modified-Since header is after the last modified time
-		if err == nil && !databaseLastModified.After(requestedModificationTime) {
-			return true, nil
-		}
+
+	// Use time.RFC3339 to parse ISO 8601 format
+	requestedModificationTime, err := time.Parse(time.RFC3339, ifModifiedSince)
+	if err != nil {
+		return false, fmt.Errorf("error parsing If-Modified-Since header: %v", err)
+	}
+
+	// Check if the database last modified time is after the requested modification time
+	if !databaseLastModified.After(requestedModificationTime) {
+		return true, nil
 	}
 	return false, nil
 }
