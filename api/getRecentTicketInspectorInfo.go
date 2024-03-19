@@ -27,8 +27,32 @@ func IdToCoordinates(id string) (float64, float64, error) {
 	return station.Coordinates.Latitude, station.Coordinates.Longitude, nil
 }
 
-func GetRecentTicketInspectorInfo(c echo.Context) error {
+func RemoveDuplicateStations(ticketInspectorList []TicketInspector) []TicketInspector {
+	uniqueStations := make(map[string]TicketInspector)
+	for _, ticketInspector := range ticketInspectorList {
+		stationID := ticketInspector.Station.ID
+		if existingInspector, ok := uniqueStations[stationID]; !ok || ticketInspector.Timestamp.After(existingInspector.Timestamp) {
+			uniqueStations[stationID] = ticketInspector
+		}
+	}
 
+	filteredTicketInspectorList := make([]TicketInspector, 0, len(uniqueStations))
+	for _, ticketInspector := range uniqueStations {
+		filteredTicketInspectorList = append(filteredTicketInspectorList, ticketInspector)
+	}
+
+	// Sort the list by timestamp, then by station name if timestamps are equal
+	sort.Slice(filteredTicketInspectorList, func(i, j int) bool {
+		if filteredTicketInspectorList[i].Timestamp.Equal(filteredTicketInspectorList[j].Timestamp) {
+			return filteredTicketInspectorList[i].Station.Name < filteredTicketInspectorList[j].Station.Name
+		}
+		return filteredTicketInspectorList[i].Timestamp.After(filteredTicketInspectorList[j].Timestamp)
+	})
+
+	return filteredTicketInspectorList
+}
+
+func GetRecentTicketInspectorInfo(c echo.Context) error {
 	// Get the latest ticket inspector information from the database
 	TicketInfoList, err := database.GetLatestStationCoordinates()
 
@@ -70,7 +94,6 @@ func GetRecentTicketInspectorInfo(c echo.Context) error {
 
 		if ticketInfo.Direction_ID.Valid {
 			cleanedDirectionId = strings.ReplaceAll(ticketInfo.Direction_ID.String, "\n", "")
-
 		}
 
 		if ticketInfo.Line.Valid {
@@ -84,7 +107,6 @@ func GetRecentTicketInspectorInfo(c echo.Context) error {
 		}
 
 		// Get the names
-
 		stationName, err := IdToStationName(cleanedStationId)
 
 		if err != nil {
@@ -107,7 +129,6 @@ func GetRecentTicketInspectorInfo(c echo.Context) error {
 		}
 
 		// Create a new TicketInspector struct and append it to the slice
-
 		TicketInspectorInfo := TicketInspector{
 			Timestamp: ticketInfo.Timestamp,
 			Station: Station{
@@ -134,27 +155,7 @@ func GetRecentTicketInspectorInfo(c echo.Context) error {
 	}
 
 	// Remove duplicate stations, and only keep the latest timestamp
-	uniqueStations := make(map[string]TicketInspector)
-	filteredTicketInspectorList := []TicketInspector{}
-
-	for _, ticketInspector := range TicketInspectorList {
-		stationID := ticketInspector.Station.ID
-		if existingInspector, ok := uniqueStations[stationID]; !ok || ticketInspector.Timestamp.After(existingInspector.Timestamp) {
-			uniqueStations[stationID] = ticketInspector
-		}
-	}
-
-	for _, ticketInspector := range uniqueStations {
-		filteredTicketInspectorList = append(filteredTicketInspectorList, ticketInspector)
-	}
-
-	// We sort the list, as it is always shuffled on api call, which makes the frontend flicker
-	sort.Slice(filteredTicketInspectorList, func(i, j int) bool {
-		if filteredTicketInspectorList[i].Timestamp.Equal(filteredTicketInspectorList[j].Timestamp) {
-			return filteredTicketInspectorList[i].Station.Name < filteredTicketInspectorList[j].Station.Name
-		}
-		return filteredTicketInspectorList[i].Timestamp.After(filteredTicketInspectorList[j].Timestamp)
-	})
+	filteredTicketInspectorList := RemoveDuplicateStations(TicketInspectorList)
 
 	// Return the data to the frontend
 	return c.JSONPretty(http.StatusOK, filteredTicketInspectorList, "  ")
