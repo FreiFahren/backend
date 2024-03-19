@@ -13,22 +13,14 @@ import (
 )
 
 func GetRecentTicketInspectorInfo(c echo.Context) error {
-	// fetch the most recent update time from the database
-	lastModified, err := database.GetLatestUpdateTime()
-	fmt.Println("Last modified time: ", lastModified)
+	// Check if the data has been modified since the provided time
+	modifiedSince, err := CheckIfModifiedSince(c)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-
-	// Parse the If-Modified-Since header from the request
-	ifModifiedSince := c.Request().Header.Get("If-Modified-Since")
-	if ifModifiedSince != "" {
-		ifModTime, err := time.Parse(http.TimeFormat, ifModifiedSince)
-		if err == nil && !lastModified.After(ifModTime) {
-			fmt.Println("Data hasn't been modified since the provided time")
-			// Data hasn't been modified since the provided time, return 304
-			return c.NoContent(http.StatusNotModified)
-		}
+	if modifiedSince {
+		// Return 304 Not Modified if the data hasn't been modified since the provided time
+		return c.NoContent(http.StatusNotModified)
 	}
 
 	// Proceed with fetching and processing the data if it was modified
@@ -56,6 +48,23 @@ func GetRecentTicketInspectorInfo(c echo.Context) error {
 	filteredTicketInspectorList := RemoveDuplicateStations(ticketInspectorList)
 
 	return c.JSONPretty(http.StatusOK, filteredTicketInspectorList, "  ")
+}
+
+func CheckIfModifiedSince(c echo.Context) (bool, error) {
+	databaseLastModified, err := database.GetLatestUpdateTime()
+	if err != nil {
+		return false, err
+	}
+
+	ifModifiedSince := c.Request().Header.Get("If-Modified-Since")
+	if ifModifiedSince != "" {
+		requestedModificationTime, err := time.Parse(http.TimeFormat, ifModifiedSince)
+		// check if the If-Modified-Since header is after the last modified time
+		if err == nil && !databaseLastModified.After(requestedModificationTime) {
+			return true, nil
+		}
+	}
+	return false, nil
 }
 
 func IdToCoordinates(id string) (float64, float64, error) {
