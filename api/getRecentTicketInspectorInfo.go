@@ -9,7 +9,6 @@ import (
 
 	"github.com/FreiFahren/backend/database"
 	"github.com/FreiFahren/backend/structs"
-	. "github.com/FreiFahren/backend/structs"
 	"github.com/labstack/echo/v4"
 )
 
@@ -54,8 +53,8 @@ func IdToCoordinates(id string) (float64, float64, error) {
 	return station.Coordinates.Latitude, station.Coordinates.Longitude, nil
 }
 
-func RemoveDuplicateStations(ticketInspectorList []TicketInspector) []TicketInspector {
-	uniqueStations := make(map[string]TicketInspector)
+func RemoveDuplicateStations(ticketInspectorList []structs.TicketInspector) []structs.TicketInspector {
+	uniqueStations := make(map[string]structs.TicketInspector)
 	for _, ticketInspector := range ticketInspectorList {
 		stationID := ticketInspector.Station.ID
 		if existingInspector, ok := uniqueStations[stationID]; !ok || ticketInspector.Timestamp.After(existingInspector.Timestamp) {
@@ -63,7 +62,7 @@ func RemoveDuplicateStations(ticketInspectorList []TicketInspector) []TicketInsp
 		}
 	}
 
-	filteredTicketInspectorList := make([]TicketInspector, 0, len(uniqueStations))
+	filteredTicketInspectorList := make([]structs.TicketInspector, 0, len(uniqueStations))
 	for _, ticketInspector := range uniqueStations {
 		filteredTicketInspectorList = append(filteredTicketInspectorList, ticketInspector)
 	}
@@ -103,37 +102,37 @@ func constructTicketInspectorInfo(ticketInfo database.TicketInfo) (structs.Ticke
 
 	stationLat, stationLon, err := IdToCoordinates(cleanedStationId)
 	if err != nil {
-		return TicketInspector{}, err
+		return structs.TicketInspector{}, err
 	}
 
 	stationName, err := IdToStationName(cleanedStationId)
 	if err != nil {
-		return TicketInspector{}, err
+		return structs.TicketInspector{}, err
 	}
 
 	directionName, directionLat, directionLon := "", float64(0), float64(0)
 	if ticketInfo.Direction_ID.Valid {
 		directionName, err = IdToStationName(cleanedDirectionId)
 		if err != nil {
-			return TicketInspector{}, err
+			return structs.TicketInspector{}, err
 		}
 		directionLat, directionLon, err = IdToCoordinates(cleanedDirectionId)
 		if err != nil {
-			return TicketInspector{}, err
+			return structs.TicketInspector{}, err
 		}
 	}
 
-	ticketInspectorInfo := TicketInspector{
+	ticketInspectorInfo := structs.TicketInspector{
 		Timestamp: ticketInfo.Timestamp,
-		Station: Station{
+		Station: structs.Station{
 			ID:          cleanedStationId,
 			Name:        stationName,
-			Coordinates: Coordinates{Latitude: stationLat, Longitude: stationLon},
+			Coordinates: structs.Coordinates{Latitude: stationLat, Longitude: stationLon},
 		},
-		Direction: Station{
+		Direction: structs.Station{
 			ID:          cleanedDirectionId,
 			Name:        directionName,
-			Coordinates: Coordinates{Latitude: directionLat, Longitude: directionLon},
+			Coordinates: structs.Coordinates{Latitude: directionLat, Longitude: directionLon},
 		},
 		Line: cleanedLine,
 	}
