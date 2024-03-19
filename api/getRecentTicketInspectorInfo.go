@@ -16,6 +16,7 @@ func GetRecentTicketInspectorInfo(c echo.Context) error {
 	// Check if the data has been modified since the provided time
 	modifiedSince, err := CheckIfModifiedSince(c)
 	if err != nil {
+		fmt.Printf("Error checking if the data has been modified: %v\n", err)
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 	if modifiedSince {
@@ -64,6 +65,8 @@ func CheckIfModifiedSince(c echo.Context) (bool, error) {
 	}
 
 	// Check if the database last modified time is after the requested modification time
+	fmt.Printf("Database last modified: %v\n", databaseLastModified)
+	fmt.Printf("Requested modification time: %v\n", requestedModificationTime)
 	if !databaseLastModified.After(requestedModificationTime) {
 		return true, nil
 	}
