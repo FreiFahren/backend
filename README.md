@@ -89,16 +89,18 @@ Example:
 
 ### Receive the last known stations 15 mins ago
 
-- `/recent` - This endpoint is used to GET all sightings from the last 15 minutes
+- `/recent` - This endpoint is used to get the last known stations 15 mins ago. It uses if-Modified-Since to cache the response and only return a new response if the data has changed.
 
-The request should be a `GET` request, with this example:
+The request should be a `GET` request, with this example, where the header timestamp is before the last known sighting of an inspector.:
 
 Example:
 ```sh
 curl -X GET http://localhost:8080/recent \
-     -H "Content-Type: application/json" 
+     -H "If-Modified-Since: Sat, 29 Oct 2024 19:43:31 GMT"
 
 ```
+
+Response:
 
 ```json
 [
@@ -126,6 +128,9 @@ curl -X GET http://localhost:8080/recent \
 
 ```
 
+If there is no 'If-Modified-Since' header, it will return the same response as the previous example.
+
+If the 'If-Modified-Since' header is after the last known sighting of an inspector, it will return a 304 Not Modified response.
 
 
 ### Get all stations and lines list
