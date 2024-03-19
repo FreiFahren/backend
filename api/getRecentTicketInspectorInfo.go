@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/FreiFahren/backend/database"
+	"github.com/FreiFahren/backend/structs"
 	. "github.com/FreiFahren/backend/structs"
 	"github.com/labstack/echo/v4"
 )
@@ -52,111 +53,89 @@ func RemoveDuplicateStations(ticketInspectorList []TicketInspector) []TicketInsp
 	return filteredTicketInspectorList
 }
 
-func GetRecentTicketInspectorInfo(c echo.Context) error {
-	// Get the latest ticket inspector information from the database
-	TicketInfoList, err := database.GetLatestStationCoordinates()
+func FetchAndAddHistoricData(ticketInfoList []database.TicketInfo) ([]database.TicketInfo, error) {
+	if len(ticketInfoList) < 10 {
+		historicDataList, err := database.GetHistoricStations(time.Now())
+		if err != nil {
+			return nil, err
+		}
 
+		for _, ticketInfo := range historicDataList {
+			if len(ticketInfoList) >= 10 {
+				break
+			}
+			ticketInfoList = append(ticketInfoList, ticketInfo)
+		}
+	}
+	return ticketInfoList, nil
+}
+
+func ProcessTicketInfo(ticketInfo database.TicketInfo) (structs.TicketInspector, error) {
+	cleanedStationId := strings.ReplaceAll(ticketInfo.Station_ID, "\n", "")
+	cleanedDirectionId := strings.ReplaceAll(ticketInfo.Direction_ID.String, "\n", "")
+	cleanedLine := strings.ReplaceAll(ticketInfo.Line.String, "\n", "")
+
+	stationLat, stationLon, err := IdToCoordinates(cleanedStationId)
+	if err != nil {
+		return TicketInspector{}, err
+	}
+
+	stationName, err := IdToStationName(cleanedStationId)
+	if err != nil {
+		return TicketInspector{}, err
+	}
+
+	directionName, directionLat, directionLon := "", float64(0), float64(0)
+	if ticketInfo.Direction_ID.Valid {
+		directionName, err = IdToStationName(cleanedDirectionId)
+		if err != nil {
+			return TicketInspector{}, err
+		}
+		directionLat, directionLon, err = IdToCoordinates(cleanedDirectionId)
+		if err != nil {
+			return TicketInspector{}, err
+		}
+	}
+
+	ticketInspectorInfo := TicketInspector{
+		Timestamp: ticketInfo.Timestamp,
+		Station: Station{
+			ID:          cleanedStationId,
+			Name:        stationName,
+			Coordinates: Coordinates{Latitude: stationLat, Longitude: stationLon},
+		},
+		Direction: Station{
+			ID:          cleanedDirectionId,
+			Name:        directionName,
+			Coordinates: Coordinates{Latitude: directionLat, Longitude: directionLon},
+		},
+		Line: cleanedLine,
+	}
+	return ticketInspectorInfo, nil
+}
+
+func GetRecentTicketInspectorInfo(c echo.Context) error {
+	ticketInfoList, err := database.GetLatestStationCoordinates()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	// We fill up TicketInfoList with historic data, if we have less than 10 current entries
-	if len(TicketInfoList) < 10 {
-		historicDataList, err := database.GetHistoricStations(time.Now())
-
-		if err != nil {
-			return c.JSON(http.StatusInternalServerError, err.Error())
-		}
-
-		for _, TicketInfo := range historicDataList {
-
-			fmt.Println("Adding historic data...")
-			if len(TicketInfoList) > 10 {
-				break
-			}
-
-			TicketInfoList = append(TicketInfoList, TicketInfo)
-			fmt.Println(TicketInfo.Station_ID)
-
-		}
+	// Now correctly typed to accept the slice of database.TicketInfo
+	ticketInfoList, err = FetchAndAddHistoricData(ticketInfoList)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	TicketInspectorList := make([]TicketInspector, 0)
-
-	// go through all the id's, remove the \n and get the coordinates
-	// then appends it to the slice
-	for _, ticketInfo := range TicketInfoList {
-
-		cleanedStationId := strings.ReplaceAll(ticketInfo.Station_ID, "\n", "")
-
-		cleanedDirectionId := ""
-		cleanedLine := ""
-
-		if ticketInfo.Direction_ID.Valid {
-			cleanedDirectionId = strings.ReplaceAll(ticketInfo.Direction_ID.String, "\n", "")
-		}
-
-		if ticketInfo.Line.Valid {
-			cleanedLine = strings.ReplaceAll(ticketInfo.Line.String, "\n", "")
-		}
-
-		stationLat, stationLon, err := IdToCoordinates(cleanedStationId)
-
+	ticketInspectorList := []structs.TicketInspector{}
+	for _, ticketInfo := range ticketInfoList {
+		ticketInspector, err := ProcessTicketInfo(ticketInfo)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, err.Error())
 		}
-
-		// Get the names
-		stationName, err := IdToStationName(cleanedStationId)
-
-		if err != nil {
-			return c.JSON(http.StatusInternalServerError, err.Error())
-		}
-
-		directionName := ""
-		var directionLat float64 = 0
-		var directionLon float64 = 0
-
-		if ticketInfo.Direction_ID.Valid {
-			directionName, err = IdToStationName(cleanedDirectionId)
-			if err != nil {
-				return c.JSON(http.StatusInternalServerError, err.Error())
-			}
-			directionLat, directionLon, err = IdToCoordinates(cleanedDirectionId)
-			if err != nil {
-				return c.JSON(http.StatusInternalServerError, err.Error())
-			}
-		}
-
-		// Create a new TicketInspector struct and append it to the slice
-		TicketInspectorInfo := TicketInspector{
-			Timestamp: ticketInfo.Timestamp,
-			Station: Station{
-				ID:   cleanedStationId,
-				Name: stationName,
-				Coordinates: Coordinates{
-					Latitude:  stationLat,
-					Longitude: stationLon,
-				},
-			},
-			Direction: Station{
-				ID:   cleanedDirectionId,
-				Name: directionName,
-				Coordinates: Coordinates{
-					Latitude:  directionLat,
-					Longitude: directionLon,
-				},
-			},
-			Line: cleanedLine,
-		}
-
-		TicketInspectorList = append(TicketInspectorList, TicketInspectorInfo)
-
+		ticketInspectorList = append(ticketInspectorList, ticketInspector)
 	}
 
-	// Remove duplicate stations, and only keep the latest timestamp
-	filteredTicketInspectorList := RemoveDuplicateStations(TicketInspectorList)
+	filteredTicketInspectorList := RemoveDuplicateStations(ticketInspectorList)
 
-	// Return the data to the frontend
 	return c.JSONPretty(http.StatusOK, filteredTicketInspectorList, "  ")
 }
