@@ -96,8 +96,7 @@ The request should be a `GET` request, with this example, where the header times
 **Example:**
 ```sh
 curl -X GET http://localhost:8080/recent \
-     -H "If-Modified-Since: Sat, 29 Oct 2024 19:43:31 GMT"
-
+     -H "If-Modified-Since: 2024-03-19T18:07:40.893188Z"
 ```
 
 **Response:**
