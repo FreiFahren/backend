@@ -68,7 +68,7 @@ type CoordinatesEntry struct {
 	Longitude float64 `json:"longitude"`
 }
 
-type Data struct {
+type AllStationsAndLinesList struct {
 	Lines    []map[string][]string       `json:"lines"`
 	Stations map[string]StationListEntry `json:"stations"`
 }
