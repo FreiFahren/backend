@@ -51,26 +51,29 @@ func GetRecentTicketInspectorInfo(c echo.Context) error {
 }
 
 func CheckIfModifiedSince(c echo.Context) (bool, error) {
-	databaseLastModified, err := database.GetLatestUpdateTime()
-	if err != nil {
-		return false, err
-	}
+    databaseLastModified, err := database.GetLatestUpdateTime()
+    if err != nil {
+        return false, err
+    }
 
-	ifModifiedSince := c.Request().Header.Get("If-Modified-Since")
+    ifModifiedSince := c.Request().Header.Get("If-Modified-Since")
 
-	// Use time.RFC3339 to parse ISO 8601 format
-	requestedModificationTime, err := time.Parse(time.RFC3339, ifModifiedSince)
-	if err != nil {
-		return false, fmt.Errorf("error parsing If-Modified-Since header: %v", err)
-	}
+    // If the header is empty, proceed with fetching the data
+    if ifModifiedSince == "" {
+        return false, nil
+    }
 
-	// Check if the database last modified time is after the requested modification time
-	fmt.Printf("Database last modified: %v\n", databaseLastModified)
-	fmt.Printf("Requested modification time: %v\n", requestedModificationTime)
-	if !databaseLastModified.After(requestedModificationTime) {
-		return true, nil
-	}
-	return false, nil
+    // Use time.RFC3339 to parse ISO 8601 format
+    requestedModificationTime, err := time.Parse(time.RFC3339, ifModifiedSince)
+    if err != nil {
+        return false, fmt.Errorf("error parsing If-Modified-Since header: %v", err)
+    }
+
+    // Check if the database last modified time is after the requested modification time
+    if !databaseLastModified.After(requestedModificationTime) {
+        return true, nil
+    }
+    return false, nil
 }
 
 func IdToCoordinates(id string) (float64, float64, error) {
