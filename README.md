@@ -128,7 +128,7 @@ curl -X GET http://localhost:8080/recent \
 
 
 
-### Get all stations and lines list
+### Get lists of stations and lines
 
 - `/list` - This endpoint is used to GET an overview of all stations and lines, and their connections
 
@@ -167,4 +167,61 @@ It will return a json with this body:
     }
 }
 
+- `/list?station=true` - This endpoint is used to GET an overview of all stations and their connections
+
+
+The request should be a `GET` request, with this example:
+
+Example:
+```sh
+curl -X GET http://localhost:8080/list?station=true \
+     -H "Content-Type: application/json" 
+```
+It will return the station.json with this body:
+
+```json
+{
+    "U-Ado": {
+        "name": "Adenauer Platz",
+        "coordinates": {
+            "latitude": 52.4998948,
+            "longitude": 13.3071423
+        },
+        "lines": [
+            "U7"
+        ]
+    },
+}
+```
+
+- `/list?lines=true` - This endpoint is used to GET an overview of all lines and their stations
+
+
+The request should be a `GET` request, with this example:
+
+Example:
+```sh
+curl -X GET http://localhost:8080/list?lines=true \
+     -H "Content-Type: application/json" 
+```
+It will return the station.json with this body:
+
+```json
+{
+    "U1": [
+        "SU-WA",
+        "U-S",
+        "U-Gr",
+        "U-Kbo",
+        "U-Pr",
+        "U-HaT",
+        "U-Mo",
+        "U-Go",
+        "U-Kus",
+        "U-Nm",
+        "U-Wt",
+        "U-Kfu",
+        "U-U"
+    ],
+}
 ```

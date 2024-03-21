@@ -31,7 +31,7 @@ func PostInspector(c echo.Context) error {
 }
 
 func processRequestData(req InspectorRequest) (*ResponseData, error) {
-	stations, err := ReadFromFile("data/stations.json")
+	stations, err := ReadFromFile("data/Stations.json")
 	if err != nil {
 		return nil, err
 	}

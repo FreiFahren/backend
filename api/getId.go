@@ -46,7 +46,7 @@ func FindStationId(name string, stations map[string]Station) (string, bool) {
 func GetStationId(c echo.Context) error {
 	name := c.QueryParam("name")
 
-	stations, err := ReadFromFile("data/stations.json")
+	stations, err := ReadFromFile("data/Stations.json")
 	if err != nil {
 		return err
 	}

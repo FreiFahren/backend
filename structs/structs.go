@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// This is the struct that we will use to store the data from the stations.json file
+// This is the struct that we will use to store the data from the Stations.json file
 // getId.go
 
 type Station struct {
