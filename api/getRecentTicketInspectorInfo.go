@@ -78,7 +78,7 @@ func CheckIfModifiedSince(c echo.Context) (bool, error) {
 
 func IdToCoordinates(id string) (float64, float64, error) {
 
-	stations, err := ReadFromFile("data/stations.json")
+	stations, err := ReadFromFile("data/StationsList.json")
 	if err != nil {
 		return 0, 0, err
 	}

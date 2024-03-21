@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// This is the struct that we will use to store the data from the stations.json file
+// This is the struct that we will use to store the data from the StationsList.json file
 // getId.go
 
 type Station struct {
@@ -68,7 +68,7 @@ type CoordinatesEntry struct {
 	Longitude float64 `json:"longitude"`
 }
 
-type Data struct {
+type AllStationsAndLinesList struct {
 	Lines    []map[string][]string       `json:"lines"`
 	Stations map[string]StationListEntry `json:"stations"`
 }

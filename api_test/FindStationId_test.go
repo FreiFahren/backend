@@ -7,7 +7,7 @@ import (
 )
 
 func TestFindStationId(t *testing.T) {
-	stations, err := api.ReadFromFile("../data/stations.json")
+	stations, err := api.ReadFromFile("../data/StationsList.json")
 	if err != nil {
 		t.Fatalf("Failed to read stations from file: %v", err)
 	}
