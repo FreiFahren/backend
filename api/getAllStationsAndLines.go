@@ -20,7 +20,7 @@ func GetAllStationsAndLines(c echo.Context) error {
 	isLineList := c.QueryParam("lines")
 
 	if isLineList == "true" {
-		linesList, err := ReadLinesList("data/Lines.json")
+		linesList, err := ReadLinesList("data/LinesList.json")
 		if err != nil {
 			log.Fatalf("Error reading lines: %v", err)
 		}
@@ -30,7 +30,7 @@ func GetAllStationsAndLines(c echo.Context) error {
 
 	isStationList := c.QueryParam("stations")
 	if isStationList == "true" {
-		stationsList, err := ReadStationsList("data/Stations.json")
+		stationsList, err := ReadStationsList("data/StationsList.json")
 		if err != nil {
 			log.Fatalf("Error reading lines: %v", err)
 		}

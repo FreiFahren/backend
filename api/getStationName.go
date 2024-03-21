@@ -9,7 +9,7 @@ import (
 
 func IdToStationName(id string) (string, error) {
 
-	stations, err := ReadFromFile("data/Stations.json")
+	stations, err := ReadFromFile("data/StationsList.json")
 	if err != nil {
 		return "", err
 	}
