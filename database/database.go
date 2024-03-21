@@ -49,17 +49,14 @@ func Config() *pgxpool.Config {
 	dbConfig.ConnConfig.ConnectTimeout = defaultConnectTimeout
 
 	dbConfig.BeforeAcquire = func(ctx context.Context, c *pgx.Conn) bool {
-		log.Println("Acquiring a connection...")
 		return true
 	}
 
 	dbConfig.AfterRelease = func(c *pgx.Conn) bool {
-		log.Println("Connection has been released")
 		return true
 	}
 
 	dbConfig.BeforeClose = func(c *pgx.Conn) {
-		log.Println("Closed the connection pool")
 	}
 
 	return dbConfig
@@ -202,4 +199,18 @@ func GetLatestStationCoordinates() ([]TicketInfo, error) {
 	}
 
 	return ticketInfoList, nil
+}
+
+func GetLatestUpdateTime() (time.Time, error) {
+	var lastUpdateTime time.Time
+
+	sql := `SELECT MAX(timestamp) FROM ticket_info;`
+
+	err := pool.QueryRow(context.Background(), sql).Scan(&lastUpdateTime)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Failed to get latest update time: %v\n", err)
+		return time.Time{}, err
+	}
+
+	return lastUpdateTime, nil
 }
