@@ -38,7 +38,7 @@ func main() {
 	apiHOST.Use(middleware.Logger())
 	apiHOST.Use(middleware.Recover())
 
-	hosts["api.freifahren.org:8080"] = &Host{apiHOST}
+	hosts["api.freifahren.org:443"] = &Host{apiHOST}
 
 	apiHOST.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "API")
@@ -67,9 +67,8 @@ func main() {
 
 	// Start the server with AutoTLS
 	apiHOST.AutoTLSManager.Cache = autocert.DirCache("/var/www/.cache")
-	apiHOST.AutoTLSManager.HostPolicy = autocert.HostWhitelist("api.freifahren.org")
 
-	apiHOST.StartAutoTLS(":443")
+	apiHOST.Logger.Fatal(apiHOST.StartAutoTLS(":443"))
 
 	defer apiHOST.Close()
 }
