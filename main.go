@@ -43,6 +43,8 @@ func main() {
 		return c.String(http.StatusOK, "API")
 	})
 
+	apiHOST.Use(middleware.CORS())
+
 	// Close the database connection when the main function returns
 	defer database.ClosePool()
 
