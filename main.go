@@ -9,6 +9,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"golang.org/x/crypto/acme/autocert"
 )
 
 type (
@@ -64,7 +65,9 @@ func main() {
 	// Post a new ticket inspector
 	apiHOST.POST("/newInspector", api.PostInspector)
 
-	apiHOST.Start(":8080")
+	// Start the server with AutoTLS
+	apiHOST.AutoTLSManager.Cache = autocert.DirCache("/var/www/.cache")
+	apiHOST.StartAutoTLS(":443")
 
 	defer apiHOST.Close()
 }
