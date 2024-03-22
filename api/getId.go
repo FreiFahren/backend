@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -40,11 +41,13 @@ func FindStationId(name string, stations map[string]Station) (string, bool) {
 			return id, true
 		}
 	}
+
 	return "", false
 }
 
 func GetStationId(c echo.Context) error {
 	name := c.QueryParam("name")
+	fmt.Printf("receiving name: %s\n", name)
 
 	stations, err := ReadFromFile("data/StationsList.json")
 	if err != nil {
@@ -53,6 +56,7 @@ func GetStationId(c echo.Context) error {
 
 	id, found := FindStationId(name, stations)
 	if found {
+		fmt.Printf("returned id: %s\n", id)
 		return c.JSON(http.StatusOK, id)
 	}
 
