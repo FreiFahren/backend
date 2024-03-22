@@ -65,10 +65,36 @@ func main() {
 	// Post a new ticket inspector
 	apiHOST.POST("/newInspector", api.PostInspector)
 
-	// Start the server with AutoTLS
-	apiHOST.AutoTLSManager.Cache = autocert.DirCache("/var/www/.cache")
+	site := echo.New()
+	site.Use(middleware.Logger())
+	site.Use(middleware.Recover())
 
-	apiHOST.Logger.Fatal(apiHOST.StartAutoTLS(":443"))
+	hosts["freifahren.org:443"] = &Host{site}
+
+	site.GET("/", func(c echo.Context) error {
+		return c.String(http.StatusOK, "Website")
+	})
+
+	// Server
+	e := echo.New()
+	e.Any("/*", func(c echo.Context) (err error) {
+		req := c.Request()
+		res := c.Response()
+		host := hosts[req.Host]
+
+		if host == nil {
+			err = echo.ErrNotFound
+		} else {
+			host.Echo.ServeHTTP(res, req)
+		}
+
+		return
+	})
+
+	// Start the server with AutoTLS
+	e.AutoTLSManager.Cache = autocert.DirCache("/var/www/.cache")
+
+	e.Logger.Fatal(e.StartAutoTLS(":443"))
 
 	defer apiHOST.Close()
 }
