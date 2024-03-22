@@ -2,22 +2,15 @@ package database
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
 	"log"
 	"os"
 	"time"
 
+	types "github.com/FreiFahren/backend/structs"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
-
-type TicketInfo struct {
-	Timestamp    time.Time
-	Station_ID   string
-	Line         sql.NullString
-	Direction_ID sql.NullString
-}
 
 var pool *pgxpool.Pool
 
@@ -122,7 +115,7 @@ func InsertTicketInfo(timestamp *time.Time, message *string, author *int64, line
 	return nil
 }
 
-func GetHistoricStations(timestamp time.Time) ([]TicketInfo, error) {
+func GetHistoricStations(timestamp time.Time) ([]types.TicketInfo, error) {
 	// Extract hour and weekday
 	hour := timestamp.Hour()
 	weekday := timestamp.Weekday()
@@ -138,6 +131,25 @@ func GetHistoricStations(timestamp time.Time) ([]TicketInfo, error) {
         ORDER BY COUNT(station_id) DESC
         LIMIT 20;
     `
+
+	sqlTimestamp := `
+		SELECT MAX(timestamp) 
+		FROM ticket_info;
+	`
+	lastTimestampRow, err := pool.Query(context.Background(), sqlTimestamp)
+	if err != nil {
+		return nil, fmt.Errorf("query execution error: %w", err)
+	}
+	defer lastTimestampRow.Close()
+
+	var lastNonHistoricTimestamp time.Time
+	for lastTimestampRow.Next() {
+		err := lastTimestampRow.Scan(&lastNonHistoricTimestamp)
+		if err != nil {
+			log.Fatalf("Failed to scan timestamp: %v", err)
+		}
+	}
+
 	// Execute query
 	rows, err := pool.Query(context.Background(), sql, hour, weekday)
 	if err != nil {
@@ -145,14 +157,17 @@ func GetHistoricStations(timestamp time.Time) ([]TicketInfo, error) {
 	}
 	defer rows.Close()
 
-	var ticketInfoList []TicketInfo
+	var ticketInfoList []types.TicketInfo
 
 	for rows.Next() {
-		var ticketInfo TicketInfo
+		var ticketInfo types.TicketInfo
 
 		if err := rows.Scan(&ticketInfo.Station_ID); err != nil {
 			return nil, fmt.Errorf("error scanning row (historic data): %w", err)
 		}
+
+		ticketInfo.Timestamp = lastNonHistoricTimestamp
+		ticketInfo.IsHistoric = true
 		ticketInfoList = append(ticketInfoList, ticketInfo)
 	}
 
@@ -167,15 +182,15 @@ func GetHistoricStations(timestamp time.Time) ([]TicketInfo, error) {
 	return ticketInfoList, nil
 }
 
-func GetLatestStationCoordinates() ([]TicketInfo, error) {
+func GetLatestStationCoordinates() ([]types.TicketInfo, error) {
 	sql := `SELECT timestamp, station_id, direction_id, line
             FROM ticket_info
-            WHERE timestamp >= NOW() - INTERVAL '180 minutes'
+            WHERE timestamp >= NOW() - INTERVAL '15 minutes'
             AND station_name IS NOT NULL
 			AND station_id IS NOT NULL;`
 
 	rows, err := pool.Query(context.Background(), sql)
-	log.Println("Getting Data...")
+	log.Println("Getting recent station coordinates...")
 
 	if err != nil {
 		return nil, fmt.Errorf("query execution error: %w", err)
@@ -183,10 +198,10 @@ func GetLatestStationCoordinates() ([]TicketInfo, error) {
 
 	defer rows.Close()
 
-	var ticketInfoList []TicketInfo
+	var ticketInfoList []types.TicketInfo
 
 	for rows.Next() {
-		var ticketInfo TicketInfo
+		var ticketInfo types.TicketInfo
 		if err := rows.Scan(&ticketInfo.Timestamp, &ticketInfo.Station_ID, &ticketInfo.Direction_ID, &ticketInfo.Line); err != nil {
 			return nil, fmt.Errorf("error scanning row (latest station coordinate data): %w", err)
 		}
