@@ -133,7 +133,7 @@ If the 'If-Modified-Since' header is after the last known sighting of an inspect
 
 ### Get lists of stations and lines
 
-- `/list` - This endpoint is used to GET an overview of all stations and lines, and their connections
+- `/list` - This endpoint is used to GET an overview of all stations and lines, and their connections.
 
 
 The request should be a `GET` request, with this example:
@@ -167,6 +167,7 @@ curl -X GET http://localhost:8080/list \
         },
     }
 }
+```
 
 - `/list?station=true` - This endpoint is used to GET an overview of all stations and their connections
 
