@@ -46,8 +46,6 @@ func GetRecentTicketInspectorInfo(c echo.Context) error {
 	}
 
 	filteredTicketInspectorList := RemoveDuplicateStations(ticketInspectorList)
-	// delete---
-	fmt.Printf("Filtered ticket inspector list: %v\n", filteredTicketInspectorList)
 
 	return c.JSONPretty(http.StatusOK, filteredTicketInspectorList, "  ")
 }
