@@ -67,6 +67,8 @@ func main() {
 
 	// Start the server with AutoTLS
 	apiHOST.AutoTLSManager.Cache = autocert.DirCache("/var/www/.cache")
+	apiHOST.AutoTLSManager.HostPolicy = autocert.HostWhitelist("api.freifahren.org")
+
 	apiHOST.StartAutoTLS(":443")
 
 	defer apiHOST.Close()
