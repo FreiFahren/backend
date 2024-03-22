@@ -24,10 +24,11 @@ type Coordinates struct {
 // getData.go
 
 type TicketInspector struct {
-	Timestamp time.Time `json:"timestamp"`
-	Station   Station   `json:"station"`
-	Direction Station   `json:"direction"`
-	Line      string    `json:"line"`
+	Timestamp  time.Time `json:"timestamp"`
+	Station    Station   `json:"station"`
+	Direction  Station   `json:"direction"`
+	Line       string    `json:"line"`
+	IsHistoric bool      `json:"isHistoric"`
 }
 
 // For the data received from the database query we will use this struct
@@ -39,6 +40,7 @@ type TicketInfo struct {
 	Station_ID   string         `json:"station_id"`
 	Line         sql.NullString `json:"line"`
 	Direction_ID sql.NullString `json:"direction_id"`
+	IsHistoric   bool           `json:"isHistoric"`
 }
 
 // PostInspector.go

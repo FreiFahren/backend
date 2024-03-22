@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/FreiFahren/backend/database"
-	"github.com/FreiFahren/backend/structs"
+	structs "github.com/FreiFahren/backend/structs"
 	"github.com/labstack/echo/v4"
 )
 
@@ -46,34 +46,36 @@ func GetRecentTicketInspectorInfo(c echo.Context) error {
 	}
 
 	filteredTicketInspectorList := RemoveDuplicateStations(ticketInspectorList)
+	// delete---
+	fmt.Printf("Filtered ticket inspector list: %v\n", filteredTicketInspectorList)
 
 	return c.JSONPretty(http.StatusOK, filteredTicketInspectorList, "  ")
 }
 
 func CheckIfModifiedSince(c echo.Context) (bool, error) {
-    databaseLastModified, err := database.GetLatestUpdateTime()
-    if err != nil {
-        return false, err
-    }
+	databaseLastModified, err := database.GetLatestUpdateTime()
+	if err != nil {
+		return false, err
+	}
 
-    ifModifiedSince := c.Request().Header.Get("If-Modified-Since")
+	ifModifiedSince := c.Request().Header.Get("If-Modified-Since")
 
-    // If the header is empty, proceed with fetching the data
-    if ifModifiedSince == "" {
-        return false, nil
-    }
+	// If the header is empty, proceed with fetching the data
+	if ifModifiedSince == "" {
+		return false, nil
+	}
 
-    // Use time.RFC3339 to parse ISO 8601 format
-    requestedModificationTime, err := time.Parse(time.RFC3339, ifModifiedSince)
-    if err != nil {
-        return false, fmt.Errorf("error parsing If-Modified-Since header: %v", err)
-    }
+	// Use time.RFC3339 to parse ISO 8601 format
+	requestedModificationTime, err := time.Parse(time.RFC3339, ifModifiedSince)
+	if err != nil {
+		return false, fmt.Errorf("error parsing If-Modified-Since header: %v", err)
+	}
 
-    // Check if the database last modified time is after the requested modification time
-    if !databaseLastModified.After(requestedModificationTime) {
-        return true, nil
-    }
-    return false, nil
+	// Check if the database last modified time is after the requested modification time
+	if !databaseLastModified.After(requestedModificationTime) {
+		return true, nil
+	}
+	return false, nil
 }
 
 func IdToCoordinates(id string) (float64, float64, error) {
@@ -116,7 +118,7 @@ func RemoveDuplicateStations(ticketInspectorList []structs.TicketInspector) []st
 	return filteredTicketInspectorList
 }
 
-func FetchAndAddHistoricData(ticketInfoList []database.TicketInfo) ([]database.TicketInfo, error) {
+func FetchAndAddHistoricData(ticketInfoList []structs.TicketInfo) ([]structs.TicketInfo, error) {
 	if len(ticketInfoList) < 10 {
 		historicDataList, err := database.GetHistoricStations(time.Now())
 		if err != nil {
@@ -133,7 +135,7 @@ func FetchAndAddHistoricData(ticketInfoList []database.TicketInfo) ([]database.T
 	return ticketInfoList, nil
 }
 
-func constructTicketInspectorInfo(ticketInfo database.TicketInfo) (structs.TicketInspector, error) {
+func constructTicketInspectorInfo(ticketInfo structs.TicketInfo) (structs.TicketInspector, error) {
 	cleanedStationId := strings.ReplaceAll(ticketInfo.Station_ID, "\n", "")
 	cleanedDirectionId := strings.ReplaceAll(ticketInfo.Direction_ID.String, "\n", "")
 	cleanedLine := strings.ReplaceAll(ticketInfo.Line.String, "\n", "")
@@ -172,7 +174,8 @@ func constructTicketInspectorInfo(ticketInfo database.TicketInfo) (structs.Ticke
 			Name:        directionName,
 			Coordinates: structs.Coordinates{Latitude: directionLat, Longitude: directionLon},
 		},
-		Line: cleanedLine,
+		Line:       cleanedLine,
+		IsHistoric: ticketInfo.IsHistoric,
 	}
 	return ticketInspectorInfo, nil
 }
