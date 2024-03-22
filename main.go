@@ -2,11 +2,19 @@ package main
 
 import (
 	"log"
+	"net/http"
 
 	"github.com/FreiFahren/backend/api"
 	"github.com/FreiFahren/backend/database"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+)
+
+type (
+	Host struct {
+		Echo *echo.Echo
+	}
 )
 
 func main() {
@@ -22,8 +30,18 @@ func main() {
 	if err != nil {
 		log.Fatal("Error while creating a pool :(")
 	}
+	// Hosts
+	hosts := map[string]*Host{}
 
-	e := echo.New()
+	apiHOST := echo.New()
+	apiHOST.Use(middleware.Logger())
+	apiHOST.Use(middleware.Recover())
+
+	hosts["api.freifahren.org:8080"] = &Host{apiHOST}
+
+	apiHOST.GET("/", func(c echo.Context) error {
+		return c.String(http.StatusOK, "API")
+	})
 
 	// Close the database connection when the main function returns
 	defer database.ClosePool()
@@ -32,21 +50,21 @@ func main() {
 	database.CreateTicketInfoTable()
 
 	// Return the id for given name
-	e.GET("/id", api.GetStationId)
+	apiHOST.GET("/id", api.GetStationId)
 
 	// Return the last known inspectors 15 mins ago
-	e.GET("/recent", api.GetRecentTicketInspectorInfo)
+	apiHOST.GET("/recent", api.GetRecentTicketInspectorInfo)
 
 	// Return the name for given id
-	e.GET("/station", api.GetStationName)
+	apiHOST.GET("/station", api.GetStationName)
 
 	// Return all stations with their id (used for suggestions on the frontend)
-	e.GET("/list", api.GetAllStationsAndLines)
+	apiHOST.GET("/list", api.GetAllStationsAndLines)
 
 	// Post a new ticket inspector
-	e.POST("/newInspector", api.PostInspector)
+	apiHOST.POST("/newInspector", api.PostInspector)
 
-	e.Start(":8080")
+	apiHOST.Start(":8080")
 
-	defer e.Close()
+	defer apiHOST.Close()
 }
