@@ -9,7 +9,6 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"golang.org/x/crypto/acme/autocert"
 )
 
 type (
@@ -38,7 +37,7 @@ func main() {
 	apiHOST.Use(middleware.Logger())
 	apiHOST.Use(middleware.Recover())
 
-	hosts["api.freifahren.org:443"] = &Host{apiHOST}
+	hosts["api.freifahren.org:8080"] = &Host{apiHOST}
 
 	apiHOST.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "API")
@@ -65,36 +64,7 @@ func main() {
 	// Post a new ticket inspector
 	apiHOST.POST("/newInspector", api.PostInspector)
 
-	site := echo.New()
-	site.Use(middleware.Logger())
-	site.Use(middleware.Recover())
-
-	hosts["freifahren.org:443"] = &Host{site}
-
-	site.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Website")
-	})
-
-	// Server
-	e := echo.New()
-	e.Any("/*", func(c echo.Context) (err error) {
-		req := c.Request()
-		res := c.Response()
-		host := hosts[req.Host]
-
-		if host == nil {
-			err = echo.ErrNotFound
-		} else {
-			host.Echo.ServeHTTP(res, req)
-		}
-
-		return
-	})
-
-	// Start the server with AutoTLS
-	e.AutoTLSManager.Cache = autocert.DirCache("/var/www/.cache")
-
-	e.Logger.Fatal(e.StartAutoTLS(":443"))
+	apiHOST.Start(":8080")
 
 	defer apiHOST.Close()
 }
