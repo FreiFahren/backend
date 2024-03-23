@@ -37,7 +37,7 @@ func main() {
 	apiHOST.Use(middleware.Logger())
 	apiHOST.Use(middleware.Recover())
 
-	hosts["api.freifahren.org:8080"] = &Host{apiHOST}
+	hosts["api.localhost:8080"] = &Host{apiHOST}
 
 	apiHOST.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "API")
